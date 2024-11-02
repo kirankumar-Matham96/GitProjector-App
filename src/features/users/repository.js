@@ -13,8 +13,8 @@ class UserRepository {
         id: userCreated._id,
         name: userCreated.name,
         email: userCreated.email,
-        subscribed: userCreated.registeredOn,
-        updated: userCreated.updatedOn,
+        subscribed: userCreated.createdAt,
+        updated: userCreated.updatedAt,
       };
       return userData;
     } catch (error) {
@@ -96,6 +96,12 @@ class UserRepository {
 
   deleteUser = async (userId) => {
     try {
+      const user = await userModel.findByIdAndDelete(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      return user;
     } catch (error) {
       throw error;
     }

@@ -32,7 +32,7 @@ class UserController {
       );
 
       res
-        .status(201)
+        .status(200)
         .json({ success: true, message: "User signed in successfully", token });
     } catch (error) {
       next(error);
@@ -72,11 +72,8 @@ class UserController {
   deleteUserById = async (req, res, next) => {
     try {
       const { userId } = req;
-      const user = await userRepository.deleteUser(userId);
-      console.log(user.ok);
-      console.log(user.status);
-
-      response
+      await userRepository.deleteUser(userId);
+      res
         .status(200)
         .json({ success: true, message: "User deleted successfully" });
     } catch (error) {
