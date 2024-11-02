@@ -12,14 +12,12 @@ export const auth = (req, res, next) => {
       throw new Error("Token required");
     }
 
-    //   validate/verify token
     const isTokenValid = JWT.verify(token, process.env.SECRET_KEY);
 
     if (!isTokenValid) {
       throw new Error("Invalid token");
     }
 
-    // add user id in request
     req.userId = isTokenValid.id;
     next();
   } catch (error) {

@@ -42,9 +42,7 @@ class UserController {
   getUserById = async (req, res, next) => {
     try {
       const { userId } = req;
-      console.log("🚀 ~ UserController ~ getUserById= ~ userId:", userId);
       const user = await userRepository.getUser(userId);
-      console.log("🚀 ~ UserController ~ getUserById= ~ user:", user);
       res
         .status(200)
         .json({ success: true, message: "User fetched successfully", user });
@@ -57,9 +55,12 @@ class UserController {
     try {
       const { userId } = req;
       const { name, email, password } = req.body;
-      const user = await userRepository.updateUser(
-        (userId, (user = { name, email, password }))
-      );
+
+      const user = await userRepository.updateUser(userId, {
+        name,
+        email,
+        password,
+      });
       res
         .status(200)
         .json({ success: true, message: "User updated successfully", user });
