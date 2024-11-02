@@ -53,6 +53,7 @@ class UserRepository {
 
   getUser = async (userId) => {
     try {
+            
     } catch (error) {
       throw error;
     }
