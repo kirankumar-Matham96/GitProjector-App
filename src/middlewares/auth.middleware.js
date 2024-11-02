@@ -1,4 +1,5 @@
 import JWT from "jsonwebtoken";
+import { CustomError } from "../utils/customError.js";
 
 export const auth = (req, res, next) => {
   try {
@@ -9,13 +10,13 @@ export const auth = (req, res, next) => {
         : authorization;
 
     if (!token) {
-      throw new Error("Token required");
+      throw new CustomError("Token required");
     }
 
     const isTokenValid = JWT.verify(token, process.env.SECRET_KEY);
 
     if (!isTokenValid) {
-      throw new Error("Invalid token");
+      throw new CustomError("Invalid token");
     }
 
     req.userId = isTokenValid.id;

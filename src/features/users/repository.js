@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { userModel } from "./schema.js";
 import { encrypt } from "../../middlewares/encrypt.middleware.js";
+import { CustomError } from "../../utils/customError.js";
 
 class UserRepository {
   addUser = async (user) => {
@@ -29,7 +30,7 @@ class UserRepository {
       const userFound = await userModel.findOne({ email });
 
       if (!userFound) {
-        throw new Error("User not found");
+        throw new CustomError("User not found", 404);
       }
 
       const isPasswordMatch = await bcrypt.compare(
@@ -38,7 +39,7 @@ class UserRepository {
       );
 
       if (!isPasswordMatch) {
-        throw new Error("Invalid credentials");
+        throw new CustomError("Invalid credentials", 403);
       }
 
       const userData = {
@@ -98,7 +99,7 @@ class UserRepository {
     try {
       const user = await userModel.findByIdAndDelete(userId);
       if (!user) {
-        throw new Error("User not found");
+        throw new CustomError("User not found", 404);
       }
 
       return user;
