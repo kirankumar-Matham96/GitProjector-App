@@ -22,4 +22,6 @@
 
 - readme
 
-New Line Appended through github api using plugin
+- New Line Appended through github api using plugin
+
+- Test is success with the new feature
