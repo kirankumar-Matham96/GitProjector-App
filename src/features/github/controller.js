@@ -1,4 +1,5 @@
 import { Octokit } from "octokit";
+import { createOrUpdateTextFile } from "@octokit/plugin-create-or-update-text-file";
 import { CustomError } from "../../utils/customError.js";
 
 class GithubController {
@@ -11,7 +12,12 @@ class GithubController {
         throw new CustomError("GitHub access token required", 400);
       }
 
-      this.#octokit = new Octokit({
+      // setting up a plugin to octokit
+      const MyOctokit = Octokit.plugin(createOrUpdateTextFile).defaults({
+        userAgent: "Kiran Git Projector",
+      });
+
+      this.#octokit = new MyOctokit({
         auth: token,
       });
     } catch (error) {
@@ -118,6 +124,7 @@ class GithubController {
     }
   };
 
+  /* Custom made code */
   updateReadme = async (req, res, next) => {
     try {
       // get the readme file
@@ -162,6 +169,45 @@ class GithubController {
       res
         .status(200)
         .json({ success: true, message: "readme updated successfully" });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  #updateContent = (type, oldContent, newContent) => {
+    if (type.toLowerCase() === "replace") {
+      return newContent;
+    }
+
+    return oldContent + newContent;
+  };
+
+  updateReadmeWithPlugin = async (req, res, next) => {
+    try {
+      const {
+        repoName,
+        newContent,
+        commitMessage,
+        committerName,
+        comitterEmail,
+        typeOfUpdate,
+      } = req.body;
+
+      const resp = await this.#octokit.createOrUpdateTextFile({
+        owner: this.#getUserName(),
+        repo: repoName,
+        path: "readme.md",
+        message: commitMessage,
+        committer: {
+          name: committerName || this.#getUserName(),
+          email: comitterEmail || "mathamkirankumar@gmial.com",
+        },
+        content: ({ content }) =>
+          this.#updateContent(typeOfUpdate, content, newContent),
+      });
+      res
+        .status(200)
+        .json({ success: true, message: "File upadeted successfully" });
     } catch (error) {
       next(error);
     }

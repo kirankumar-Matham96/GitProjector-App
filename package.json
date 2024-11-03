@@ -22,6 +22,7 @@
   "author": "Kirankumar Matham",
   "license": "ISC",
   "dependencies": {
+    "@octokit/plugin-create-or-update-text-file": "^5.1.0",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",

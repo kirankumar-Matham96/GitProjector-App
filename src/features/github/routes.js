@@ -9,3 +9,4 @@ gitRouter.get("/login", githubController.login);
 gitRouter.get("/languages", githubController.getRepoLanguages);
 gitRouter.get("/readme", githubController.getReadme);
 gitRouter.put("/readme", githubController.updateReadme);
+gitRouter.put("/readmeWithPlugin", githubController.updateReadmeWithPlugin);
