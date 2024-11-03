@@ -12,3 +12,5 @@
 - documentation (function/class vise)
 - swagger documentation for the users
 - readme
+
+- Here is another content updated from the api using octokit plugin
