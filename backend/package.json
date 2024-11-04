@@ -1,0 +1,40 @@
+{
+  "name": "git_projector_api",
+  "version": "1.0.0",
+  "description": "An app that utilizes github api to get the repositories data",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "REST",
+    "API",
+    "restful",
+    "api",
+    "mongodb",
+    "JWT",
+    "authentication"
+  ],
+  "author": "Kirankumar Matham",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/auth-oauth-device": "^7.1.1",
+    "@octokit/plugin-create-or-update-text-file": "^5.1.0",
+    "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-validator": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.0",
+    "node-fetch": "^3.3.2",
+    "octokit": "^4.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
