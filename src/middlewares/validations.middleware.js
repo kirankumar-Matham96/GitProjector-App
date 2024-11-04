@@ -1,6 +1,18 @@
 import { body, validationResult } from "express-validator";
 
 class Validations {
+  /**
+   * Validates user signup request data.
+   *
+   * This middleware checks if the user name, email, and password meet the required 
+   * validation criteria. If any validation fails, a response is sent with a 400 status
+   * and an appropriate error message. Otherwise, it calls the next middleware.
+   *
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @param {Function} next - The next middleware function.
+   * @returns {Object} - Returns a JSON response with error messages if validation fails.
+   */
   userSignup = async (req, res, next) => {
     try {
       await body("name")
@@ -34,6 +46,19 @@ class Validations {
     }
   };
 
+  /**
+   * Validates user update request data.
+   *
+   * This middleware checks if the user name, email, and password meet the required 
+   * validation criteria for updating user information. If any validation fails, a 
+   * response is sent with a 400 status and an appropriate error message. Otherwise, 
+   * it calls the next middleware.
+   *
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @param {Function} next - The next middleware function.
+   * @returns {Object} - Returns a JSON response with error messages if validation fails.
+   */
   userUpdate = async (req, res, next) => {
     try {
       await body("name")

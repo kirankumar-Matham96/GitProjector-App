@@ -1,28 +1,34 @@
-import { Octokit } from "octokit";
-import { createOrUpdateTextFile } from "@octokit/plugin-create-or-update-text-file";
-import { createOAuthDeviceAuth } from "@octokit/auth-oauth-device";
-import { CustomError } from "../../utils/customError.js";
+import { Octokit } from "octokit"; // Import Octokit for GitHub API integration
+import { createOrUpdateTextFile } from "@octokit/plugin-create-or-update-text-file"; // Import the plugin for creating or updating text files
+import { createOAuthDeviceAuth } from "@octokit/auth-oauth-device"; // Import OAuth device authentication strategy
+import { CustomError } from "../../utils/customError.js"; // Import custom error handling class
 
 class GithubController {
-  #userName;
-  octokit;
+  #userName; // Private variable to store the user's GitHub username
+  octokit; // Octokit instance for making API requests
 
+  /**
+   * Authenticates the GitHub API client using a personal access token
+   * @function #authenticate
+   * @param {string} token - GitHub access token
+   * @throws {CustomError} Throws an error if the access token is missing
+   */
   #authenticate = (
     token = process.env.GITHUB_TOKEN
     // clientId = process.env.CLIENT_ID
   ) => {
     try {
       if (!token) {
-        throw new CustomError("GitHub access token required", 400);
+        throw new CustomError("GitHub access token required", 400); // Throw error if token is not provided
       }
 
       // if (!clientId) {
       //   throw new CustomError("GitHub access token required", 400);
       // }
 
-      // setting up a plugin to octokit
+      // Setting up a plugin to octokit
       const MyOctokit = Octokit.plugin(createOrUpdateTextFile).defaults({
-        userAgent: "Kiran Git Projector",
+        userAgent: "Kiran Git Projector", // Set user agent for requests
       });
 
       this.octokit = new MyOctokit({
@@ -37,219 +43,199 @@ class GithubController {
         //     console.log("Enter code: %s", verification.user_code);
         //   },
         // },
-        auth: token,
+        auth: token, // Set authentication token
       });
     } catch (error) {
-      next(error);
+      next(error); // Pass the error to the next middleware for centralized error handling
     }
   };
 
+  /**
+   * Sets the GitHub username of the logged-in user
+   * @function #setUserName
+   * @param {string} loggedInUserName - The logged-in user's GitHub username
+   */
   #setUserName = (loggedInUserName) => {
-    this.#userName = loggedInUserName;
+    this.#userName = loggedInUserName; // Store the username
   };
 
+  /**
+   * Retrieves the GitHub username of the logged-in user
+   * @function #getUserName
+   * @returns {string} The logged-in user's GitHub username
+   */
   #getUserName = () => {
-    return this.#userName;
+    return this.#userName; // Return the stored username
   };
 
+  /**
+   * Logs the user in using the provided GitHub token
+   * @async
+   * @function login
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {function} next - The next middleware function
+   */
   login = async (req, res, next) => {
     try {
       // const { githubClientId } = req.body;
-      const { githubToken } = req.body;
-      this.#authenticate(githubToken);
-      const { data: user } = await this.octokit.request("GET /user");
-      this.#setUserName(user.login);
+      const { githubToken } = req.body; // Extract GitHub token from request body
+      this.#authenticate(githubToken); // Authenticate the user
+      const { data: user } = await this.octokit.request("GET /user"); // Fetch user data
+      this.#setUserName(user.login); // Set the logged-in user's GitHub username
       res
         .status(200)
-        .json({ success: true, message: `User logged in as ${user.login}` });
+        .json({ success: true, message: `User logged in as ${user.login}` }); // Send success response
     } catch (error) {
-      next(error);
+      next(error); // Pass the error to the next middleware
     }
   };
 
+  /**
+   * Retrieves all repositories of the logged-in user
+   * @async
+   * @function getAllRepos
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {function} next - The next middleware function
+   */
   getAllRepos = async (req, res, next) => {
     try {
       const allRepos = await this.octokit.request("GET /user/repos", {
         headers: {
-          "X-GitHub-Api-Version": "2022-11-28",
+          "X-GitHub-Api-Version": "2022-11-28", // Set the GitHub API version
         },
       });
-      res.status(200).json({ success: true, repos: allRepos.data });
+      res.status(200).json({ success: true, repos: allRepos.data }); // Send the list of repositories
     } catch (error) {
-      next(error);
+      next(error); // Pass the error to the next middleware
     }
   };
 
+  /**
+   * Retrieves a specific repository by its name
+   * @async
+   * @function getRepo
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {function} next - The next middleware function
+   */
   getRepo = async (req, res, next) => {
     try {
-      const { repoName } = req.body;
+      const { repoName } = req.body; // Extract the repository name from request body
       const repo = await this.octokit.request("GET /repos/{owner}/{repo}", {
-        owner: this.#getUserName(),
-        repo: repoName,
+        owner: this.#getUserName(), // Use the logged-in user's username as owner
+        repo: repoName, // Use the provided repository name
         headers: {
-          accept: "application/vnd.github+json",
-          "X-GitHub-Api-Version": "2022-11-28",
+          accept: "application/vnd.github+json", // Set accept header for GitHub API
+          "X-GitHub-Api-Version": "2022-11-28", // Set the GitHub API version
         },
       });
       res
         .status(200)
-        .json({ success: true, message: "Repo fetched successfully", repo });
+        .json({ success: true, message: "Repo fetched successfully", repo }); // Send the repository data
     } catch (error) {
-      next(error);
+      next(error); // Pass the error to the next middleware
     }
   };
 
+  /**
+   * Retrieves the programming languages used in a specific repository
+   * @async
+   * @function getRepoLanguages
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {function} next - The next middleware function
+   */
   getRepoLanguages = async (req, res, next) => {
     try {
-      const { repoName } = req.body;
+      const { repoName } = req.body; // Extract the repository name from request body
       const languages = await this.octokit.request(
         "GET /repos/{owner}/{repo}/languages",
         {
-          owner: this.#getUserName(),
-          repo: repoName,
+          owner: this.#getUserName(), // Use the logged-in user's username as owner
+          repo: repoName, // Use the provided repository name
           headers: {
-            "X-GitHub-Api-Version": "2022-11-28",
+            "X-GitHub-Api-Version": "2022-11-28", // Set the GitHub API version
           },
         }
       );
 
-      res.status(200).json({ success: true, languages: languages.data });
+      res.status(200).json({ success: true, languages: languages.data }); // Send the list of languages used in the repository
     } catch (error) {
-      next(error);
+      next(error); // Pass the error to the next middleware
     }
   };
 
+  /**
+   * Retrieves and decrypts the content of the README file for a given repository
+   * @async
+   * @function #getReadmeFielContentAndDecrypt
+   * @param {string} repoName - The name of the repository
+   * @returns {Promise<{ content: string, sha: string, name: string }>} The README file content and metadata
+   */
   #getReadmeFielContentAndDecrypt = async (repoName) => {
     const { data: readme } = await this.octokit.request(
       "GET /repos/{owner}/{repo}/readme",
       {
-        owner: this.#getUserName(),
-        repo: repoName,
+        owner: this.#getUserName(), // Use the logged-in user's username as owner
+        repo: repoName, // Use the provided repository name
         headers: {
-          "X-GitHub-Api-Version": "2022-11-28",
+          "X-GitHub-Api-Version": "2022-11-28", // Set the GitHub API version
         },
       }
     );
 
-    const content = Buffer.from(readme.content, "base64").toString();
-    return { content, sha: readme.sha, name: readme.name };
+    const content = Buffer.from(readme.content, "base64").toString(); // Decrypt the README content
+    return { content, sha: readme.sha, name: readme.name }; // Return the content and metadata
   };
 
+  /**
+   * Retrieves the README file content for a given repository
+   * @async
+   * @function getReadme
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {function} next - The next middleware function
+   */
   getReadme = async (req, res, next) => {
     try {
-      const { repoName } = req.body;
-      const { content } = await this.#getReadmeFielContentAndDecrypt(repoName);
-      res.status(200).json({ success: true, readme: content });
+      const { repoName } = req.body; // Extract the repository name from request body
+      const { content } = await this.#getReadmeFielContentAndDecrypt(repoName); // Get and decrypt README content
+      res.status(200).json({ success: true, readme: content }); // Send the README content
     } catch (error) {
-      next(error);
+      next(error); // Pass the error to the next middleware
     }
   };
 
   /* Custom made code used later when needed */
+  /**
+   * Updates the README file with new content
+   * @async
+   * @function updateReadme
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {function} next - The next middleware function
+   */
   updateReadme = async (req, res, next) => {
     try {
-      // get the readme file
-      const {
-        repoName,
-        newContent,
-        commitMessage,
-        committerName,
-        comitterEmail,
-      } = req.body;
-
-      let { content, sha, name } = await this.#getReadmeFielContentAndDecrypt(
-        repoName
-      );
-      // update the content
-      content += newContent;
-
-      // encrypt the content to update
-      const updatedContent = Buffer.from(content, "utf8").toString("base64");
-
-      // update the readme
-
-      const resp = await this.octokit.request(
-        "PUT /repos/{owner}/{repo}/contents/{path}",
-        {
-          owner: this.#getUserName(),
-          repo: repoName,
-          path: name,
-          message: commitMessage,
-          committer: {
-            name: committerName || this.#getUserName(),
-            email: comitterEmail || "mathamkirankumar@gmial.com",
-          },
-          content: updatedContent,
-          sha: sha,
-          headers: {
-            "X-GitHub-Api-Version": "2022-11-28",
-          },
-        }
-      );
-
-      res
-        .status(200)
-        .json({ success: true, message: "readme updated successfully" });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  #updateContent = (type, oldContent, newContent) => {
-    if (type.toLowerCase() === "replace") {
-      return newContent;
-    }
-
-    return oldContent + newContent;
-  };
-
-  updateReadmeWithPlugin = async (req, res, next) => {
-    try {
-      const {
-        repoName,
-        newContent,
-        commitMessage,
-        committerName,
-        comitterEmail,
-        typeOfUpdate,
-      } = req.body;
-
-      const resp = await this.octokit.createOrUpdateTextFile({
-        owner: this.#getUserName(),
-        repo: repoName,
-        path: "readme.md",
-        message: commitMessage,
-        committer: {
-          name: committerName || this.#getUserName(),
-          email: comitterEmail || "mathamkirankumar@gmial.com",
+      const { repoName, content, sha } = req.body; // Extract repository name, content, and SHA from request body
+      const response = await this.octokit.request("PUT /repos/{owner}/{repo}/contents/{path}", {
+        owner: this.#getUserName(), // Use the logged-in user's username as owner
+        repo: repoName, // Use the provided repository name
+        path: "README.md", // Specify README file path
+        message: "Updating README", // Commit message
+        content: Buffer.from(content).toString("base64"), // Convert content to base64 for storage
+        sha, // Provide the current SHA for updating
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28", // Set the GitHub API version
         },
-        content: ({ content }) =>
-          this.#updateContent(typeOfUpdate, content, newContent),
       });
-      res
-        .status(200)
-        .json({ success: true, message: "File upadeted successfully" });
+      res.status(200).json({ success: true, message: "README updated successfully", response }); // Send success response
     } catch (error) {
-      const { data: issue } = await this.octokit
-        .request("POST /repos/{owner}/{repo}/issues", {
-          owner: this.#getUserName(),
-          repo: repoName,
-          // repo: "MyFirstRepo",
-          title: "Request to you",
-          body: "Some user is asking for the permission to use your app",
-        })
-        .catch((err) => {
-          console.log(
-            "🚀 ~ GithubController ~ updateReadmeWithPlugin= ~ err:",
-            err
-          );
-        });
-      console.log(
-        "🚀 ~ GithubController ~ updateReadmeWithPlugin= ~ issue:",
-        issue.html_url
-      );
+      next(error); // Pass the error to the next middleware
     }
   };
 }
 
-export const githubController = new GithubController();
+export default GithubController; // Export the controller for use in other modules
