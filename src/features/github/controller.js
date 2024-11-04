@@ -8,17 +8,17 @@ class GithubController {
   octokit;
 
   #authenticate = (
-    token = process.env.GITHUB_TOKEN,
-    clientId = process.env.CLIENT_ID
+    token = process.env.GITHUB_TOKEN
+    // clientId = process.env.CLIENT_ID
   ) => {
     try {
-      // if (!token) {
-      //   throw new CustomError("GitHub access token required", 400);
-      // }
-
-      if (!clientId) {
+      if (!token) {
         throw new CustomError("GitHub access token required", 400);
       }
+
+      // if (!clientId) {
+      //   throw new CustomError("GitHub access token required", 400);
+      // }
 
       // setting up a plugin to octokit
       const MyOctokit = Octokit.plugin(createOrUpdateTextFile).defaults({
@@ -26,26 +26,18 @@ class GithubController {
       });
 
       this.octokit = new MyOctokit({
-        authStrategy: createOAuthDeviceAuth,
-        auth: {
-          clientType: "oauth-app",
-          clientId: clientId,
-          scopes: ["public_repo"],
-          onVerification(verification) {
-            // verification example
-            // {
-            //   device_code: "3584d83530557fdd1f46af8289938c8ef79f9dc5",
-            //   user_code: "WDJB-MJHT",
-            //   verification_uri: "https://github.com/login/device",
-            //   expires_in: 900,
-            //   interval: 5,
-            // };
-
-            console.log("Open %s", verification.verification_uri);
-            console.log("Enter code: %s", verification.user_code);
-          },
-        },
-        // auth: token,
+        // oauth client id approach (not suitable for this project)
+        // authStrategy: createOAuthDeviceAuth,
+        // auth: {
+        //   clientType: "oauth-app",
+        //   clientId: clientId,
+        //   scopes: ["public_repo"],
+        //   onVerification(verification) {
+        //     console.log("Open %s", verification.verification_uri);
+        //     console.log("Enter code: %s", verification.user_code);
+        //   },
+        // },
+        auth: token,
       });
     } catch (error) {
       next(error);
@@ -62,8 +54,9 @@ class GithubController {
 
   login = async (req, res, next) => {
     try {
-      const { githubToken, githubClientId } = req.body;
-      this.#authenticate(githubToken, githubClientId);
+      // const { githubClientId } = req.body;
+      const { githubToken } = req.body;
+      this.#authenticate(githubToken);
       const { data: user } = await this.octokit.request("GET /user");
       this.#setUserName(user.login);
       res

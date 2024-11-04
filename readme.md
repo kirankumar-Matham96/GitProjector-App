@@ -37,7 +37,7 @@
   - Utilized the "auth-oauth-device" packege from npm to make it possible.
 
   difficulty-2:
-  - I can use this package and make it work with my terminal. But when UI is connected, how can I make the user see this code and let him/her authenticate for the next step?
+  - I can use "auth-oauth-device" package and make it work with my terminal. But when UI is connected, how can I make the user see this code and let him/her authenticate for the next step?
 
 - Validations
 - test cases
