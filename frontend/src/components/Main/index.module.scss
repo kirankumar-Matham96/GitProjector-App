@@ -9,12 +9,20 @@
     width: 100%;
     background-color: #0002;
     .h1 {
+      display: inline-block;
       margin: 10rem 0 0 10rem;
       font-size: 5rem;
+      cursor: all-scroll;
+      will-change: filter;
+      transition: box-shadow 1s ease-in-out;
+      & span:hover {
+        filter: drop-shadow(0 0 10px red);
+      }
     }
     .subH {
       margin: 1rem 0 0 10rem;
       font-size: 1.5rem;
+      cursor: pointer;
     }
   }
 }
