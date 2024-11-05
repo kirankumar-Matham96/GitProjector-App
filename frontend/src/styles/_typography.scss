@@ -1,0 +1,28 @@
+@use "./_colors" as *;
+
+// Fonts
+$font-primary: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+// Font Sizes
+$font-size-h1: 3.2em;
+$font-size-base: 1em;
+
+// Headings
+h1 {
+  font-size: $font-size-h1;
+  line-height: 1.1;
+}
+
+// Links
+a {
+  font-weight: 500;
+  color: $purple;
+  text-decoration: inherit;
+
+  &:hover {
+    color: $dark-purple;
+  }
+}
+
+// Forward typography settings
+// @forward "./_typography";

@@ -1,0 +1,61 @@
+@use "./_colors" as *;
+@use "./_typography" as *;
+@use "./_mixins" as *;
+@use "./_utilities" as *;
+
+@forward "./_colors";
+@forward "./_typography";
+@forward "./_mixins";
+@forward "./_utilities";
+
+/* Root-Level Styles */
+:root {
+  font-family: $font-primary;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: $text-color-dark;
+  background-color: $bg-color-dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button {
+  @include button-style($dark2, $purple);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: $text-color-light;
+    background-color: $bg-color-light;
+  }
+
+  nav {
+    background-color: $light3;
+  }
+
+  a:hover {
+    color: $light-purple2;
+  }
+
+  button {
+    background-color: $light3;
+  }
+}

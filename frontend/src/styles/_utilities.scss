@@ -1,0 +1,9 @@
+@use "./_colors" as *;
+
+// Utility class for documentation links
+.read-the-docs {
+  color: $light-gray;
+}
+
+// Export utilities
+// @forward "./_utilities";
