@@ -37,6 +37,13 @@ body {
   min-height: 100vh;
 }
 
+header {
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  z-index: 999;
+}
+
 button {
   @include button-style($dark2, $purple);
 }
