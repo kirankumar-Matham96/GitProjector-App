@@ -1,20 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import userAPI from "../api/userAPI";
 
 export const signup = createAsyncThunk(
   "auth/sigup",
   async (userData, thunkApi) => {
     try {
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const resp = await axios.post(URL, userData, options);
-      console.log("🚀 ~ signup ~ resp:", resp);
-      return resp;
+      return await userAPI.userSignup(userData);
     } catch (error) {
-      console.log("🚀 ~ signup ~ error:", error);
       return thunkApi.rejectWithValue(error.message);
     }
   }
@@ -22,19 +14,10 @@ export const signup = createAsyncThunk(
 
 export const signin = createAsyncThunk(
   "auth/signin",
-  async ({ email, password }, thunkApi) => {
+  async (userData, thunkApi) => {
     try {
-      const data = { email, password };
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const resp = await axios.post(URL, data, options);
-      console.log("🚀 ~ signin ~ resp:", resp);
-      return resp;
+      return await userAPI.userSignin(userData);
     } catch (error) {
-      console.log("🚀 ~ signin ~ error:", error);
       thunkApi.rejectWithValue(error.message);
     }
   }

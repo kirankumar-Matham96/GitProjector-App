@@ -1,18 +1,15 @@
-import Button from "../../components/Button";
-import SplineScene from "../../components/SplineScene";
-import homeStyles from "./index.module.css";
+import Header from "../../components/Header";
+import Main from "../../components/Main";
+import Footer from "../../components/Footer";
 
+import homeStyles from "./index.module.css";
 const Home = () => {
   return (
-    <div>
-      <header></header>
-      <section className={homeStyles.hero}>
-        <SplineScene />
-      </section>
-      <footer>
-        <Button />
-      </footer>
-    </div>
+    <>
+      <Header />
+      <Main />
+      <Footer />
+    </>
   );
 };
 

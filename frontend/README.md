@@ -1,5 +1,14 @@
 # Git-Projector
 
+## Tasks:
+
+    1. Create app and folder structure - done
+    2. Setup redux (redux-toolkit) - done
+    3. Create Landing Page
+    4. Create Signup & Signin pages
+    5. Create Search page for git repos
+    6. Create repo page
+
 folder structure:
 
     gitprojector/
