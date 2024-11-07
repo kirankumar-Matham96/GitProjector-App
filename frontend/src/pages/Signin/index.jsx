@@ -1,8 +1,8 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useSelector, useDispatch } from "react-redux";
-import { authSelector, signin } from "../../redux/authSlice";
+import { authSelector, signin, setUser } from "../../redux/authSlice";
 import Card from "../../components/Card";
 import styles from "./index.module.scss";
 
@@ -20,8 +20,16 @@ const Signin = () => {
       password: password.current.value,
     };
 
+    dispatch(setUser(userData));
     dispatch(signin(userData));
   };
+
+  useEffect(() => {
+    if (!auth.isLoading) {
+      email.current.value = "";
+      password.current.value = "";
+    }
+  }, [auth.isLoading]);
 
   return (
     <Card>
@@ -42,7 +50,9 @@ const Signin = () => {
           id="signinPassword"
           placeholder="Enter your password"
         />
-        <Button type="submit">Sign In</Button>
+        <Button type="submit">
+          {auth.isLoading ? "Loading..." : "Sign In"}
+        </Button>
       </form>
     </Card>
   );

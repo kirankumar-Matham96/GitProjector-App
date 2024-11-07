@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useSelector, useDispatch } from "react-redux";
@@ -26,6 +26,15 @@ const Signup = () => {
 
     dispatch(signup(userData));
   };
+
+  useEffect(() => {
+    if (!auth.isLoading) {
+      name.current.value = "";
+      email.current.value = "";
+      password.current.value = "";
+      confirmPassword.current.value = "";
+    }
+  }, [auth.isLoading]);
 
   return (
     <form onSubmit={handleSubmit}>
