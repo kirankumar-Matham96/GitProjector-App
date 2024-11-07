@@ -1,10 +1,22 @@
-import Home from "./containers/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
 
 function App() {
   return (
-    <div id="app">
-      <Home />
-    </div>
+    <BrowserRouter>
+      <div id="app">
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+          {/* <Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<Signup />} /> */}
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

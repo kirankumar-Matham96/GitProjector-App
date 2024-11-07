@@ -28,7 +28,7 @@ const initialState = {
   email: "",
   token: "",
   isSucess: false,
-  loading: false,
+  isLoading: false,
   isError: false,
   error: null,
 };
@@ -38,40 +38,40 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     signout: (state, action) => {
-      state.loading = true;
+      state.isLoading = true;
       state.token = "";
       state.userName = "";
       state.email = "";
       state.isSucess = true;
-      state.loading = false;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
     builder
       // signup
       .addCase(signup.pending, (state, action) => {
-        state.loading = true;
+        state.isLoading = true;
       })
       .addCase(signup.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.isSucess = true;
       })
       .addCase(signup.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.isError = true;
         state.error = action.payload;
       })
       // signin
       .addCase(signin.pending, (state, action) => {
-        state.loading = true;
+        state.isLoading = true;
       })
       .addCase(signin.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.isSucess = true;
         state.token = action.payload.token;
       })
       .addCase(signin.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.isError = true;
         state.error = action.payload;
       });
@@ -80,4 +80,4 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 export const { signout } = authSlice.actions;
-export const authSelector = (state) => state.authSlice.reducer;
+export const authSelector = (state) => authSlice;

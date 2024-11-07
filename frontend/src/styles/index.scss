@@ -47,6 +47,9 @@ header {
 button {
   @include button-style($dark2, $purple);
 }
+input {
+  @include input-style($dark2, $purple);
+}
 
 @media (prefers-color-scheme: light) {
   :root {
