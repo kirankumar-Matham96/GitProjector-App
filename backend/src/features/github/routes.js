@@ -1,5 +1,5 @@
 import { Router } from "express"; // Import Router from express
-import { githubController } from "./controller.js"; // Import the GitHub controller
+import githubController from "./controller.js"; // Import the GitHub controller
 
 export const gitRouter = Router(); // Create a new router instance
 
@@ -75,4 +75,3 @@ gitRouter.put("/readme", githubController.updateReadme); // Route to update READ
  * @returns {Error}  400 - Bad request error
  */
 // gitRouter.put("/readmeWithPlugin", githubController.updateReadmeWithPlugin); // Route to update README content with plugin (commented out for future use)
-
