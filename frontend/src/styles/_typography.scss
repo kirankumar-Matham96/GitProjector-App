@@ -24,7 +24,13 @@ a {
   text-decoration: inherit;
 
   &:hover {
-    color: $dark-purple;
+    color: $light2;
+  }
+
+  @media (prefers-color-scheme: light) {
+    &:hover {
+      color: $dark-radium;
+    }
   }
 }
 

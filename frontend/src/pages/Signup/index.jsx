@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useSelector, useDispatch } from "react-redux";
@@ -80,6 +81,9 @@ const Signup = () => {
           <Button type="submit">
             {(auth.isLoading && "Loading...") || "Sign Up"}
           </Button>
+          <p className="helper-link">
+            <Link to="/signin">Have an account already?</Link>
+          </p>
         </form>
       </Card>
     </div>

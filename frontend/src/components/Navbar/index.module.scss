@@ -26,6 +26,27 @@ nav {
   &:hover {
     filter: drop-shadow(0 0 0.5rem #{$light1});
   }
+
+  @media (prefers-color-scheme: light) {
+    &:hover {
+      filter: drop-shadow(0 0 0.5rem #{$dark-radium});
+    }
+  }
+}
+
+.navBrand > a {
+  color: $light2;
+
+  &:hover {
+    color: $light2;
+  }
+
+  @media (prefers-color-scheme: light) {
+    color: $dark-radium;
+    &:hover {
+      color: $dark-radium;
+    }
+  }
 }
 
 .navRight {
@@ -66,5 +87,28 @@ nav {
       width: 100%;
       background-color: $light2;
     }
+  }
+
+  @media (prefers-color-scheme: light) {
+    &:hover {
+      background-color: $light5;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -1rem;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        background-color: $dark-radium;
+      }
+    }
+  }
+}
+
+.navLink > a {
+  color: $light2;
+
+  @media (prefers-color-scheme: light) {
+    color: $dark-radium;
   }
 }
