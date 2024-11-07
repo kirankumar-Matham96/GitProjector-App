@@ -3,6 +3,8 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { authSelector, signup } from "../../redux/authSlice";
+import Card from "../../components/Card";
+import styles from "./index.module.scss";
 
 const Signup = () => {
   const auth = useSelector(authSelector);
@@ -37,45 +39,50 @@ const Signup = () => {
   }, [auth.isLoading]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Input
-        ref={name}
-        label="Name: "
-        type="text"
-        name="name"
-        id="signupName"
-        placeholder="Enter your name"
-      />
+    <div className={styles.bg_signup}>
+      <Card>
+        <form onSubmit={handleSubmit}>
+          <h2>SIGN UP</h2>
+          <Input
+            ref={name}
+            label="Name: "
+            type="text"
+            name="name"
+            id="signupName"
+            placeholder="Enter your name"
+          />
 
-      <Input
-        ref={email}
-        label="Email: "
-        type="email"
-        name="email"
-        id="signupEmail"
-        placeholder="Enter your email"
-      />
+          <Input
+            ref={email}
+            label="Email: "
+            type="email"
+            name="email"
+            id="signupEmail"
+            placeholder="Enter your email"
+          />
 
-      <Input
-        ref={password}
-        label="Password: "
-        type="password"
-        name="password"
-        id="signupPassword"
-        placeholder="Enter your password"
-      />
-      <Input
-        ref={confirmPassword}
-        label="Confirm Password: "
-        type="password"
-        name="password"
-        id="signupConfirmPassword"
-        placeholder="Enter your password"
-      />
-      <Button type="submit">
-        {(auth.isLoading && "Loading...") || "Sign Up"}
-      </Button>
-    </form>
+          <Input
+            ref={password}
+            label="Password: "
+            type="password"
+            name="password"
+            id="signupPassword"
+            placeholder="Enter your password"
+          />
+          <Input
+            ref={confirmPassword}
+            label="Confirm Password: "
+            type="password"
+            name="password"
+            id="signupConfirmPassword"
+            placeholder="Confirm password"
+          />
+          <Button type="submit">
+            {(auth.isLoading && "Loading...") || "Sign Up"}
+          </Button>
+        </form>
+      </Card>
+    </div>
   );
 };
 

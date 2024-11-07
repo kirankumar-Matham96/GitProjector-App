@@ -32,29 +32,32 @@ const Signin = () => {
   }, [auth.isLoading]);
 
   return (
-    <Card>
-      <form onSubmit={handleSubmit}>
-        <Input
-          ref={email}
-          label="Email: "
-          type="email"
-          name="email"
-          id="signinEmail"
-          placeholder="Enter your email"
-        />
-        <Input
-          ref={password}
-          label="Password: "
-          type="password"
-          name="password"
-          id="signinPassword"
-          placeholder="Enter your password"
-        />
-        <Button type="submit">
-          {auth.isLoading ? "Loading..." : "Sign In"}
-        </Button>
-      </form>
-    </Card>
+    <div className={styles.bg_signin}>
+      <Card>
+        <form className={styles.signinForm} onSubmit={handleSubmit}>
+          <h2>SIGN IN</h2>
+          <Input
+            ref={email}
+            label="Email: "
+            type="email"
+            name="email"
+            id="signinEmail"
+            placeholder="Enter your email"
+          />
+          <Input
+            ref={password}
+            label="Password: "
+            type="password"
+            name="password"
+            id="signinPassword"
+            placeholder="Enter your password"
+          />
+          <Button type="submit">
+            {auth.isLoading ? "Loading..." : "Sign In"}
+          </Button>
+        </form>
+      </Card>
+    </div>
   );
 };
 

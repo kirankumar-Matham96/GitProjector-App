@@ -2,12 +2,7 @@ import { forwardRef } from "react";
 
 const Input = forwardRef((props, ref) => {
   const { id, label, ...inputProps } = props;
-  return (
-    <label htmlFor={id}>
-      {label}
-      <input id={id} ref={ref} {...inputProps} />
-    </label>
-  );
+  return <input id={id} ref={ref} {...inputProps} />;
 });
 
 export default Input;
