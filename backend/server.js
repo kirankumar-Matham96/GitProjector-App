@@ -1,5 +1,6 @@
 import "dotenv/config"; // Import environment variables
 import express from "express"; // Import Express framework
+import cors from "cors";
 import { connectToDB } from "./src/config/mongoose.config.js"; // Import DB connection function
 import { userRouter } from "./src/features/users/routes.js"; // Import user routes
 import { handleError } from "./src/middlewares/errorHandling.middleware.js"; // Import error handling middleware
@@ -13,6 +14,11 @@ const app = express(); // Create an instance of Express
  */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+/**
+ * Middleware to use cors
+ */
+app.use(cors());
 
 /**
  * Set up user-related routes
