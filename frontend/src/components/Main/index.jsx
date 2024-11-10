@@ -26,7 +26,6 @@ const Main = () => {
           </h3>
         </div>
       </section>
-      <section className={styles.hero}></section>
     </main>
   );
 };
