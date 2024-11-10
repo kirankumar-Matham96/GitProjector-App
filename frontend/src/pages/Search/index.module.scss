@@ -3,35 +3,3 @@
 .bgContainer {
   padding: 3rem;
 }
-
-.searchContainer {
-  margin: 0 0 0 0;
-}
-
-.search {
-  width: 50%;
-  border-radius: 1rem;
-  padding: 0.5rem 1rem;
-  margin: 0 auto;
-  background-color: $dark3;
-  display: flex;
-  align-items: center;
-  &:hover {
-    border-color: $purple;
-  }
-
-  &:focus,
-  &:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
-  }
-
-  & input {
-    margin: 0 0 0 0.5rem;
-    width: 100%;
-  }
-}
-
-.searchIcon {
-  font-size: 2rem;
-  transform: translate(0, 5px);
-}
