@@ -1,5 +1,6 @@
 import SearchBox from "../../components/SearchBox";
 import SearchResults from "../../components/SearchResults";
+import GithubAuth from "../../components/GithubAuth";
 import styles from "./index.module.scss";
 
 const Search = () => {
@@ -10,7 +11,7 @@ const Search = () => {
       </div>
       <div>
         <SearchResults />
-        
+        <GithubAuth />
       </div>
       {/* | For ref | */}
       <div>

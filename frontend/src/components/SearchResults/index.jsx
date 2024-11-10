@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { dispatch } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 
 const SearchResults = () => {
-  const dispatch = dispatch();
+  const dispatch = useDispatch();
 
   return <div>Search Results</div>;
 };
