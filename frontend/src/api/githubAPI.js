@@ -10,13 +10,19 @@ class GithubApis {
   }
 
   //   authenticate user with github token
-  getGithhubAccess = async (data) => {
+  getGithhubAccess = async ({ githubToken, authToken }) => {
     try {
+      this.headers["Authorization"] = authToken;
+      console.log(
+        "🚀 ~ GithubApis ~ getGithhubAccess= ~ this.headers:",
+        this.headers
+      );
+
       const options = {
         headers: this.headers,
-        data: json.stringify(data),
+        data: JSON.stringify(githubToken),
       };
-      const resp = await axios.post(`${this.URL}/repos/login`, options);
+      const resp = await axios.get(`${this.URL}/repos/login`, options);
       console.log("🚀 ~ UserApis ~ getGithhubAccess= ~ resp.data:", resp.data);
       return resp.data;
     } catch (error) {
