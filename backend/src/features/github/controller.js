@@ -220,22 +220,31 @@ class GithubController {
   updateReadme = async (req, res, next) => {
     try {
       const { repoName, content, sha } = req.body; // Extract repository name, content, and SHA from request body
-      const response = await this.octokit.request("PUT /repos/{owner}/{repo}/contents/{path}", {
-        owner: this.#getUserName(), // Use the logged-in user's username as owner
-        repo: repoName, // Use the provided repository name
-        path: "README.md", // Specify README file path
-        message: "Updating README", // Commit message
-        content: Buffer.from(content).toString("base64"), // Convert content to base64 for storage
-        sha, // Provide the current SHA for updating
-        headers: {
-          "X-GitHub-Api-Version": "2022-11-28", // Set the GitHub API version
-        },
-      });
-      res.status(200).json({ success: true, message: "README updated successfully", response }); // Send success response
+      const response = await this.octokit.request(
+        "PUT /repos/{owner}/{repo}/contents/{path}",
+        {
+          owner: this.#getUserName(), // Use the logged-in user's username as owner
+          repo: repoName, // Use the provided repository name
+          path: "README.md", // Specify README file path
+          message: "Updating README", // Commit message
+          content: Buffer.from(content).toString("base64"), // Convert content to base64 for storage
+          sha, // Provide the current SHA for updating
+          headers: {
+            "X-GitHub-Api-Version": "2022-11-28", // Set the GitHub API version
+          },
+        }
+      );
+      res
+        .status(200)
+        .json({
+          success: true,
+          message: "README updated successfully",
+          response,
+        }); // Send success response
     } catch (error) {
       next(error); // Pass the error to the next middleware
     }
   };
 }
 
-export default GithubController; // Export the controller for use in other modules
+export default new GithubController(); // Export the controller for use in other modules
