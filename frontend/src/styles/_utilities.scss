@@ -3,10 +3,12 @@
 // Utility class for documentation links
 .read-the-docs {
   color: $light-gray;
+  width: 50%;
 }
 
 .helper-link {
-  margin-top: 1rem;
+  color: $light-purple2;
+  cursor: pointer;
 }
 
 .hide {

@@ -1,6 +1,7 @@
 // @use "../../styles/utilities" as *;
 
 .userMenu {
+  cursor: pointer;
   position: relative;
   & ul {
     position: fixed;
@@ -13,5 +14,4 @@
     }
   }
 }
-.menuIcon {
-}
+

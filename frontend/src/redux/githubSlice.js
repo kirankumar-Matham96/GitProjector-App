@@ -9,7 +9,7 @@ export const githubLogin = createAsyncThunk(
         githubToken: gitToken,
         authToken,
       });
-      return resp.data;
+      return resp;
     } catch (error) {
       thunkApi.rejectWithValue(error.message);
     }
@@ -20,7 +20,7 @@ export const getAllRepos = createAsyncThunk(
   async (args, thunkApi) => {
     try {
       const resp = await githubApis.getAllRepos();
-      return resp.data;
+      return resp;
     } catch (error) {
       thunkApi.rejectWithValue(error.message);
     }
@@ -75,5 +75,7 @@ const githubSlice = createSlice({
 });
 
 export default githubSlice.reducer;
+
+export const { sortByDate, searchFilter, facetFilter } = githubSlice.actions;
 
 export const githubSelector = (state) => state.github;

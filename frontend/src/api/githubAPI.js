@@ -13,20 +13,18 @@ class GithubApis {
   getGithhubAccess = async ({ githubToken, authToken }) => {
     try {
       this.headers["Authorization"] = authToken;
-      console.log(
-        "🚀 ~ GithubApis ~ getGithhubAccess= ~ this.headers:",
-        this.headers
-      );
-
       const options = {
         headers: this.headers,
         data: JSON.stringify(githubToken),
       };
       const resp = await axios.get(`${this.URL}/repos/login`, options);
-      console.log("🚀 ~ UserApis ~ getGithhubAccess= ~ resp.data:", resp.data);
+      console.log(
+        "🚀 ~ GithubApis ~ getGithhubAccess= ~ resp.data:",
+        resp.data
+      );
       return resp.data;
     } catch (error) {
-      console.log("🚀 ~ UserApis ~ getGithhubAccess= ~ error:", error);
+      console.log("🚀 ~ GithubApis ~ getGithhubAccess= ~ error:", error);
     }
   };
 
@@ -35,10 +33,16 @@ class GithubApis {
       const options = {
         headers: this.headers,
       };
-      const resp = await axios.post(`${this.URL}/repos/all`, userData, options);
-      console.log("🚀 ~ UserApis ~ getAllRepos= ~ resp.data:", resp.data);
+
+      console.log("🚀 ~ GithubApis ~ getAllRepos= ~ options:", options);
+
+      const resp = await axios.get(`${this.URL}/repos/all`, options);
+
+      console.log("🚀 ~ GithubApis ~ getAllRepos= ~ resp:", resp);
       return resp.data;
-    } catch (error) {}
+    } catch (error) {
+      console.log("🚀 ~ GithubApis ~ getAllRepos= ~ error:", error);
+    }
   };
 }
 

@@ -1,34 +1,29 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SearchBox from "../../components/SearchBox";
 import SearchResults from "../../components/SearchResults";
 import GithubAuth from "../../components/GithubAuth";
-import { githubSelector } from "../../redux/githubSlice";
+import { githubSelector, getAllRepos } from "../../redux/githubSlice";
 import styles from "./index.module.scss";
 
 const Search = () => {
+  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
   const { userId } = useSelector(githubSelector);
 
   useEffect(() => {
-    console.log("🚀 ~ useEffect ~ userId:", userId);
     if (userId) {
+      setUser(userId);
+      dispatch(getAllRepos());
     }
-  });
+  }, [userId]);
 
   return (
     <div className={styles.bgContainer}>
       <div>
         <SearchBox />
       </div>
-      <div>
-        <SearchResults />
-        <GithubAuth />
-      </div>
-      {/* | For ref | */}
-      <div>
-        <h2>if new? Ask for the github token</h2>
-        <h2>if not? show the search page</h2>
-      </div>
+      <div className={styles.resultsContainer}>{user ? <SearchResults /> : <GithubAuth />}</div>
     </div>
   );
 };

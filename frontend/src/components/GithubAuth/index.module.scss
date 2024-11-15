@@ -1,0 +1,13 @@
+.gitAuthComponent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  & input {
+    margin: 0 2rem 0 0;
+  }
+  & p {
+    margin: 2rem;
+    text-align: center;
+  }
+}
