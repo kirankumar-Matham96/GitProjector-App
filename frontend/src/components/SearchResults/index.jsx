@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { githubSelector } from "../../redux/githubSlice";
+import SearchResult from "../SearchResult";
+import styles from "./index.module.scss";
 
 const SearchResults = () => {
   const { repos } = useSelector(githubSelector);
@@ -8,10 +10,19 @@ const SearchResults = () => {
   // const dispatch = useDispatch();
 
   return (
-    <div>
+    <div className={styles.resultsBgContainer}>
       <h2>Search Results</h2>
       {repos.map((repo) => (
-        <div key={repo.id}>{repo.name}</div>
+        <div className={styles.resultsContainer} key={repo.id}>
+          <SearchResult
+            title={repo.name}
+            description={repo.description}
+            tags={repo.topics}
+            createdAt={repo.created_at}
+            updatedAt={repo.updated_at}
+            languages={repo.language}
+          />
+        </div>
       ))}
     </div>
   );

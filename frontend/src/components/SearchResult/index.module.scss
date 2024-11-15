@@ -1,0 +1,16 @@
+.resultContainer {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+.resultLeft {
+  border: 1px solid red;
+  width: 70%;
+  padding: 0 0 0 2rem; 
+}
+.resultRight {
+    width: 30%;
+    text-align: right;
+    padding: 0 2rem 0 0; 
+    border: 1px solid green;
+}
