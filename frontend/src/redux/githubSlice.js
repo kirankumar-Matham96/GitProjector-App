@@ -4,15 +4,13 @@ import githubApis from "../api/githubAPI";
 export const githubLogin = createAsyncThunk(
   "github/githubLogin",
   async ({ gitToken, authToken }, thunkApi) => {
-    console.log("🚀 ~ gitToken, authToken:", gitToken, " & ", authToken);
     try {
       const resp = await githubApis.getGithhubAccess({
         githubToken: gitToken,
         authToken,
       });
-      console.log("🚀 ~ githubLogin ~ resp.data:", resp.data);
+      return resp.data;
     } catch (error) {
-      console.log("🚀 ~ githubLogin ~ error:", error);
       thunkApi.rejectWithValue(error.message);
     }
   }
@@ -24,7 +22,6 @@ export const getAllRepos = createAsyncThunk(
       const resp = await githubApis.getAllRepos();
       return resp.data;
     } catch (error) {
-      console.log("🚀 ~ getAllRepos ~ error:", error);
       thunkApi.rejectWithValue(error.message);
     }
   }
@@ -50,28 +47,28 @@ const githubSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(githubLogin.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(githubLogin.fulfilled, (state, action) => {
+        state.userId = action.payload.loggedInAs;
+        state.isLoading = false;
+      })
+      .addCase(githubLogin.rejected, (state, action) => {
+        state.isError = true;
+        state.error = action.payload;
+        state.isLoading = false;
+      })
       .addCase(getAllRepos.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(getAllRepos.fulfilled, (state, action) => {
         state.repos = action.payload.repos;
-        console.log(
-          "🚀 ~ .addCase ~ fulfilled ~ action.payload:",
-          action.payload
-        );
-        console.log(
-          "🚀 ~ .addCase ~ fulfilled ~ action.payload.repos:",
-          action.payload.repos
-        );
         state.isLoading = false;
       })
       .addCase(getAllRepos.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        console.log(
-          "🚀 ~ .addCase ~ rejected ~ action.payload:",
-          action.payload
-        );
         state.isError = true;
       });
   },

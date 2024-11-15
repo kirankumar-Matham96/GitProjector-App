@@ -17,6 +17,7 @@ const Navbar = () => {
         </div>
         <div className={styles.navRight}>
           {/* here needs a conditional rendering for login and anonymouse user */}
+          
           <FaRegCircleUser />
           {/* <img src="" alt="user" /> */}
         </div>
@@ -37,7 +38,7 @@ const Navbar = () => {
           </li>
           <li className={styles.navLink}>
             <Link to="how_it_works">
-              <AiOutlineBulb />
+              <AiOutlineBulb /> 
               <span>How it works</span>
             </Link>
           </li>

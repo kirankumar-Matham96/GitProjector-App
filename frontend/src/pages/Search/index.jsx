@@ -1,9 +1,20 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import SearchBox from "../../components/SearchBox";
 import SearchResults from "../../components/SearchResults";
 import GithubAuth from "../../components/GithubAuth";
+import { githubSelector } from "../../redux/githubSlice";
 import styles from "./index.module.scss";
 
 const Search = () => {
+  const { userId } = useSelector(githubSelector);
+
+  useEffect(() => {
+    console.log("🚀 ~ useEffect ~ userId:", userId);
+    if (userId) {
+    }
+  });
+
   return (
     <div className={styles.bgContainer}>
       <div>
