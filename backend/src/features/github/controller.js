@@ -83,13 +83,11 @@ class GithubController {
       this.#authenticate(githubToken); // Authenticate the user
       const { data: user } = await this.octokit.request("GET /user"); // Fetch user data
       this.#setUserName(user.login); // Set the logged-in user's GitHub username
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: `User logged in as ${user.login}`,
-          loggedInAs: user.login,
-        }); // Send success response
+      res.status(200).json({
+        success: true,
+        message: `User logged in as ${user.login}`,
+        loggedInAs: user.login,
+      }); // Send success response
     } catch (error) {
       next(error); // Pass the error to the next middleware
     }
@@ -105,12 +103,13 @@ class GithubController {
    */
   getAllRepos = async (req, res, next) => {
     try {
-      const allRepos = await this.octokit.request("GET /user/repos", {
+      const allRepos = await this.octokit.paginate("GET /user/repos", {
+        per_page: 10,
         headers: {
           "X-GitHub-Api-Version": "2022-11-28", // Set the GitHub API version
         },
       });
-      res.status(200).json({ success: true, repos: allRepos.data }); // Send the list of repositories
+      res.status(200).json({ success: true, repos: allRepos }); // Send the list of repositories
     } catch (error) {
       next(error); // Pass the error to the next middleware
     }
