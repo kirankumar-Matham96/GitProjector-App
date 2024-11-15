@@ -20,6 +20,7 @@ const SearchResults = () => {
             tags={repo.topics}
             createdAt={repo.created_at}
             updatedAt={repo.updated_at}
+            pushedAt={repo.pushed_at}
             languages={repo.language}
           />
         </div>

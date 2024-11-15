@@ -2,15 +2,14 @@
   margin: 1rem 0;
   display: flex;
   justify-content: space-between;
+  padding: 2rem; 
+  border-radius: 1.5rem;
+  box-shadow: 0 0 10px -1px purple;
 }
 .resultLeft {
-  border: 1px solid red;
   width: 70%;
-  padding: 0 0 0 2rem; 
 }
 .resultRight {
     width: 30%;
     text-align: right;
-    padding: 0 2rem 0 0; 
-    border: 1px solid green;
 }
