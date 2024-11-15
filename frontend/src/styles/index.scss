@@ -3,10 +3,10 @@
 @use "./_mixins" as *;
 @use "./_utilities" as *;
 
-@forward "./_colors";
-@forward "./_typography";
-@forward "./_mixins";
-@forward "./_utilities";
+// @forward "./_colors";
+// @forward "./_typography";
+// @forward "./_mixins";
+// @forward "./_utilities";
 
 /* Root-Level Styles */
 :root {

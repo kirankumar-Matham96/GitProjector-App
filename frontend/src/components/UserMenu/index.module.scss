@@ -1,0 +1,17 @@
+// @use "../../styles/utilities" as *;
+
+.userMenu {
+  position: relative;
+  & ul {
+    position: fixed;
+    right: 3rem;
+    top: 1.5rem;
+    list-style-type: none;
+    display: none;
+    & li {
+      font-size: 1rem;
+    }
+  }
+}
+.menuIcon {
+}

@@ -1,7 +1,7 @@
 import { FaGithubAlt } from "react-icons/fa";
 import { AiOutlineHome, AiOutlineSearch, AiOutlineBulb } from "react-icons/ai";
-import { FaRegCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import UserMenu from "../UserMenu";
 import styles from "./index.module.scss";
 
 const Navbar = () => {
@@ -11,15 +11,12 @@ const Navbar = () => {
         <div className={styles.navLeft}>
           <div className={styles.navBrand + " " + styles.logo}>
             <Link to="/">
-            <FaGithubAlt />
+              <FaGithubAlt />
             </Link>
           </div>
         </div>
         <div className={styles.navRight}>
-          {/* here needs a conditional rendering for login and anonymouse user */}
-          
-          <FaRegCircleUser />
-          {/* <img src="" alt="user" /> */}
+          <UserMenu />
         </div>
       </div>
       <div className={styles.navBottom}>
@@ -38,7 +35,7 @@ const Navbar = () => {
           </li>
           <li className={styles.navLink}>
             <Link to="how_it_works">
-              <AiOutlineBulb /> 
+              <AiOutlineBulb />
               <span>How it works</span>
             </Link>
           </li>

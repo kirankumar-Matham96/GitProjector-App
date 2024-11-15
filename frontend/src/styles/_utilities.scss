@@ -8,3 +8,11 @@
 .helper-link {
   margin-top: 1rem;
 }
+
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+  z-index: 10;
+}
