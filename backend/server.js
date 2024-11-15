@@ -1,12 +1,11 @@
 import "dotenv/config"; // Import environment variables
 import express from "express"; // Import Express framework
-import cors from "cors";
+import cors from "cors"; // Import cors package
 import { connectToDB } from "./src/config/mongoose.config.js"; // Import DB connection function
 import { userRouter } from "./src/features/users/routes.js"; // Import user routes
 import { handleError } from "./src/middlewares/errorHandling.middleware.js"; // Import error handling middleware
 import { gitRouter } from "./src/features/github/routes.js"; // Import GitHub routes
 import { auth } from "./src/middlewares/auth.middleware.js"; // Import authentication middleware
-import cors from "cors"; // Import cors package
 
 const app = express(); // Create an instance of Express
 
@@ -15,9 +14,6 @@ const app = express(); // Create an instance of Express
  */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// using cors middleware
-app.use(cors());
 
 /**
  * Middleware to use cors

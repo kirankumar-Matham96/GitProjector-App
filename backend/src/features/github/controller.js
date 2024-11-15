@@ -85,7 +85,11 @@ class GithubController {
       this.#setUserName(user.login); // Set the logged-in user's GitHub username
       res
         .status(200)
-        .json({ success: true, message: `User logged in as ${user.login}` }); // Send success response
+        .json({
+          success: true,
+          message: `User logged in as ${user.login}`,
+          loggedInAs: user.login,
+        }); // Send success response
     } catch (error) {
       next(error); // Pass the error to the next middleware
     }
@@ -234,13 +238,11 @@ class GithubController {
           },
         }
       );
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "README updated successfully",
-          response,
-        }); // Send success response
+      res.status(200).json({
+        success: true,
+        message: "README updated successfully",
+        response,
+      }); // Send success response
     } catch (error) {
       next(error); // Pass the error to the next middleware
     }
