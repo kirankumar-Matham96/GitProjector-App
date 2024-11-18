@@ -32,11 +32,9 @@ const SearchResult = (props) => {
           {languages && <strong>Languages:</strong>}
           {languages && languages}
         </p>
-        {tags.length > 0 && (
-          <div className={styles.tagsContainer}>
-            <Tags tags={tags} />
-          </div>
-        )}
+        <div className={styles.tagsContainer}>
+          <Tags tags={tags} />
+        </div>
       </div>
       <div className={styles.resultRight}>
         <p>
