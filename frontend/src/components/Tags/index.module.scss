@@ -1,0 +1,10 @@
+.tagsContainer {
+  list-style-type: none;
+  display: flex;
+
+  & .tagsInnerContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}

@@ -1,8 +1,18 @@
 import React from "react";
 import styles from "./index.module.scss";
+import Tag from "../Tag";
+import Tags from "../Tags";
 
 const SearchResult = (props) => {
-  const { title, description, createdAt, updatedAt, languages, tags, pushedAt } = props;
+  const {
+    title,
+    description,
+    createdAt,
+    updatedAt,
+    languages,
+    tags,
+    pushedAt,
+  } = props;
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -22,35 +32,27 @@ const SearchResult = (props) => {
           {languages && <strong>Languages:</strong>}
           {languages && languages}
         </p>
-        <ul>
-          {tags.length > 0 && <strong>Tags:</strong>}
-          {tags.length > 0 &&
-            tags.map((tag) => (
-              /**
-               * // TODOs
-               * 1. Separate the component
-               * 2. Show a few only and hide the remaining
-               * 3. Show a + and - buttons to expand and hide eccessive tags
-               *  */
-              <li key={tag}>{tag}</li>
-            ))}
-        </ul>
+        {tags.length > 0 && (
+          <div className={styles.tagsContainer}>
+            <Tags tags={tags} />
+          </div>
+        )}
       </div>
       <div className={styles.resultRight}>
         <p>
-          <strong>Created At:{" "}</strong>
+          <strong>Created At: </strong>
           {/* FIXME: use proper date format */}
           {createdAt && formatDate(createdAt)}
         </p>
         <p>
-          <strong>Updated At:{" "}</strong>
+          <strong>Updated At: </strong>
           {/* FIXME: use proper date format */}
           {updatedAt && formatDate(updatedAt)}
         </p>
         <p>
-          <strong>Latest Push On:{" "}</strong>
+          <strong>Latest Push On: </strong>
           {/* FIXME: use proper date format */}
-        
+
           {pushedAt && formatDate(pushedAt)}
         </p>
       </div>
