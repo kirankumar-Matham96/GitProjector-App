@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useSelector, useDispatch } from "react-redux";
-import { authSelector, signin, setUser } from "../../redux/authSlice";
+import { authSelector, signin } from "../../redux/authSlice";
 import Card from "../../components/Card";
 import styles from "./index.module.scss";
 
@@ -17,12 +17,13 @@ const Signin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // TODO: Need to remove default after dev
     const userData = {
-      email: email.current.value,
-      password: password.current.value,
+      email: email.current.value || "johndoe@gmail.com",
+      password: password.current.value || "qawsedrf",
     };
 
-    dispatch(setUser(userData));
+    // dispatch(setUser(userData));
     dispatch(signin(userData));
   };
 

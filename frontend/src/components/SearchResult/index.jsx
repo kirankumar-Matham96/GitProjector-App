@@ -18,7 +18,7 @@ const SearchResult = (props) => {
   return (
     <div className={styles.resultContainer}>
       <div className={styles.resultLeft}>
-        <h3>{title}</h3>
+        <h4>{title}</h4>
         <p>{description}</p>
         <p>
           {languages && <strong>Languages: </strong>}

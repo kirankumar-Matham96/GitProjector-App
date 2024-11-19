@@ -16,7 +16,9 @@ class UserApis {
       };
       const resp = await axios.post(`${this.URL}/user/add`, userData, options);
       return resp.data;
-    } catch (error) {}
+    } catch (error) {
+      console.log("🚀 ~ UserApis ~ userSignup= ~ error:", error);
+    }
   };
 
   userSignin = async (userData) => {
@@ -29,8 +31,12 @@ class UserApis {
         userData,
         options
       );
+      // JWT.decode();
+      console.log("🚀 ~ UserApis ~ userSignin= ~ resp.data:", resp.data);
       return resp.data;
-    } catch (error) {}
+    } catch (error) {
+      console.log("🚀 ~ UserApis ~ userSignin= ~ error:", error);
+    }
   };
 }
 

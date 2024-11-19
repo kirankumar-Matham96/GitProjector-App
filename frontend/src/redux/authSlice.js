@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userAPI from "../api/userAPI";
+import { decodeJWT } from "../util/decodeJWT";
 
 export const signup = createAsyncThunk(
   "auth/sigup",
@@ -37,10 +38,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      state.userName = action.payload.userName;
-      state.email = action.payload.email;
-    },
     signout: (state, action) => {
       state.isLoading = true;
       state.token = "";
@@ -71,6 +68,9 @@ const authSlice = createSlice({
       .addCase(signin.fulfilled, (state, action) => {
         state.isLoading = false;
         state.token = action.payload.token;
+        const { name, email } = decodeJWT(action.payload.token);
+        state.email = email;
+        state.userName = name;
         alert("User logged in successfully!");
       })
       .addCase(signin.rejected, (state, action) => {

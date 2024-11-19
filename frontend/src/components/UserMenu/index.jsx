@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaRegCircleUser } from "react-icons/fa6";
+import { authSelector } from "../../redux/authSlice.js";
 import styles from "./index.module.scss";
+import { useSelector } from "react-redux";
 
 const UserMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef();
+  const { userName } = useSelector(authSelector);
 
   const toggleMenu = () => {
     setShowMenu((prevState) => !prevState);
@@ -30,6 +33,8 @@ const UserMenu = () => {
         <FaRegCircleUser />
       </div>
       <ul className={`${showMenu ? "show" : ""}`}>
+        {/* show username */}
+        <h6>{userName || "Anonymouse"}</h6>
         <li>
           <Link to="/signup">Sign Up</Link>
         </li>
