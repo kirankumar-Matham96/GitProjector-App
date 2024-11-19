@@ -2,18 +2,25 @@
   margin: 1rem 0;
   display: flex;
   justify-content: space-between;
-  padding: 2rem; 
+  padding: 2rem;
   border-radius: 1.5rem;
   box-shadow: 0 0 10px -1px purple;
+
 }
 .resultLeft {
   width: 70%;
+  & h3{
+    cursor: pointer;
+    display: inline;
+  }
 }
 .resultRight {
-    width: 30%;
-    text-align: right;
+  width: 30%;
+    display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
 }
-.tagsContainer{
+.tagsContainer {
   margin-top: 1rem;
-  
 }

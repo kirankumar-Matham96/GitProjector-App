@@ -4,15 +4,7 @@ import Tag from "../Tag";
 import Tags from "../Tags";
 
 const SearchResult = (props) => {
-  const {
-    title,
-    description,
-    createdAt,
-    updatedAt,
-    languages,
-    tags,
-    pushedAt,
-  } = props;
+  const { title, description, createdAt, languages, tags, pushedAt } = props;
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -29,7 +21,7 @@ const SearchResult = (props) => {
         <h3>{title}</h3>
         <p>{description}</p>
         <p>
-          {languages && <strong>Languages:</strong>}
+          {languages && <strong>Languages: </strong>}
           {languages && languages}
         </p>
         <div className={styles.tagsContainer}>
@@ -37,22 +29,16 @@ const SearchResult = (props) => {
         </div>
       </div>
       <div className={styles.resultRight}>
-        <p>
-          <strong>Created At: </strong>
-          {/* FIXME: use proper date format */}
-          {createdAt && formatDate(createdAt)}
-        </p>
-        <p>
-          <strong>Updated At: </strong>
-          {/* FIXME: use proper date format */}
-          {updatedAt && formatDate(updatedAt)}
-        </p>
-        <p>
-          <strong>Latest Push On: </strong>
-          {/* FIXME: use proper date format */}
-
-          {pushedAt && formatDate(pushedAt)}
-        </p>
+        <div>
+          <p>
+            <strong>Created At: </strong>
+            {createdAt && formatDate(createdAt)}
+          </p>
+          <p>
+            <strong>Updated At: </strong>
+            {pushedAt && formatDate(pushedAt)}
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,18 +1,14 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { githubSelector } from "../../redux/githubSlice";
 import SearchResult from "../SearchResult";
 import styles from "./index.module.scss";
 
 const SearchResults = () => {
-  const { repos } = useSelector(githubSelector);
-  console.log("\n\n\n🚀 ~ SearchResults ~ repos:", repos, "\n\n\n");
-  // const dispatch = useDispatch();
-
+  const { filteredRepos } = useSelector(githubSelector);
   return (
     <div className={styles.resultsBgContainer}>
       <h2>Search Results</h2>
-      {repos.map((repo) => (
+      {filteredRepos.map((repo) => (
         <div className={styles.resultsContainer} key={repo.id}>
           <SearchResult
             title={repo.name}

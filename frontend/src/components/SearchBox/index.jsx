@@ -1,14 +1,16 @@
 import { AiOutlineSearch } from "react-icons/ai";
 import Input from "../../components/Input";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { searchFilter } from "../../redux/githubSlice.js";
 import styles from "./index.module.scss";
 
 const SearchBox = () => {
-    const search = useRef();
+  const search = useRef();
+  const dispatch = useDispatch();
 
-    const onChange = (e) => {
-    console.log("🚀 ~ onChange ~ search:", search.current.value);
-    // here dispatch search api towards github
+  const onChange = (e) => {
+    dispatch(searchFilter(search.current.value));
   };
 
   return (

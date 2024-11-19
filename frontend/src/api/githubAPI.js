@@ -18,13 +18,8 @@ class GithubApis {
         data: JSON.stringify(githubToken),
       };
       const resp = await axios.get(`${this.URL}/repos/login`, options);
-      console.log(
-        "🚀 ~ GithubApis ~ getGithhubAccess= ~ resp.data:",
-        resp.data
-      );
       return resp.data;
     } catch (error) {
-      console.log("🚀 ~ GithubApis ~ getGithhubAccess= ~ error:", error);
     }
   };
 
@@ -33,15 +28,9 @@ class GithubApis {
       const options = {
         headers: this.headers,
       };
-
-      console.log("🚀 ~ GithubApis ~ getAllRepos= ~ options:", options);
-
       const resp = await axios.get(`${this.URL}/repos/all`, options);
-
-      console.log("🚀 ~ GithubApis ~ getAllRepos= ~ resp:", resp);
       return resp.data;
     } catch (error) {
-      console.log("🚀 ~ GithubApis ~ getAllRepos= ~ error:", error);
     }
   };
 }
