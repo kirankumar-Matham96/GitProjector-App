@@ -42,18 +42,11 @@ const githubSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     searchFilter: (state, action) => {
-      console.log("🚀 ~ action:", action);
-      console.log("🚀 ~ action.payload:", action.payload);
       state.filteredRepos = state.repos.filter((repo) => {
         if (repo.name?.includes(action.payload)) {
-          console.log("🚀 ~ repos.filter ~ repo:", repo);
           return repo;
         }
       });
-      console.log(
-        "🚀 ~ state.filteredRepos=state.repos.filter ~ state.filteredRepos:",
-        state.filteredRepos
-      );
     },
     sortByDate: (state, action) => {},
     facetFilter: (state, action) => {},

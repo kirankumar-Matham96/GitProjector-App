@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ import styles from "./index.module.scss";
 const Signin = () => {
   const email = useRef();
   const password = useRef();
+  const navigate = useNavigate();
 
   const auth = useSelector(authSelector);
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ const Signin = () => {
     if (!auth.isLoading) {
       email.current.value = "";
       password.current.value = "";
+    }
+    if (auth.token) {
+      navigate("/search");
     }
   }, [auth.isLoading]);
 
