@@ -5,6 +5,7 @@ import SearchResults from "../../components/SearchResults";
 import GithubAuth from "../../components/GithubAuth";
 import { githubSelector, getAllRepos } from "../../redux/githubSlice";
 import Sort from "../../components/Sort";
+import Pagination from "../../components/Pagination";
 import styles from "./index.module.scss";
 
 const Search = () => {
@@ -40,6 +41,9 @@ const Search = () => {
         ) : (
           <GithubAuth />
         )}
+      </div>
+      <div>
+        <Pagination />
       </div>
     </div>
   );

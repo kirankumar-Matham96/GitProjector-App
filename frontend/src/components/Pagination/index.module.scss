@@ -1,0 +1,22 @@
+.pagination {
+  display: flex;
+  justify-content: space-around;
+}
+
+.pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.perPage {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}

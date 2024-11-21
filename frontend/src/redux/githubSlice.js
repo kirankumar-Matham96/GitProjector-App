@@ -33,6 +33,7 @@ const INITIAL_STATE = {
   userId: "",
   repos: [],
   filteredRepos: [],
+  paginatedRepos: [],
   isLoading: false,
   isError: false,
   error: null,
@@ -85,7 +86,14 @@ const githubSlice = createSlice({
       state.filteredRepos = sortedRepos;
     },
     facetFilter: (state, action) => {},
-    paginationFilter: (state, action) => {},
+    paginationFilter: (state, action) => {
+      const { page, perPage } = action.payload;
+      state.currentPage = page;
+      state.perPage = perPage;
+      const startIndex = (page - 1) * perPage;
+      const endIndex = startIndex + perPage;
+      state.paginatedRepos = state.filteredRepos.slice(startIndex, endIndex);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -119,6 +127,7 @@ const githubSlice = createSlice({
 
 export default githubSlice.reducer;
 
-export const { sortByDate, searchFilter, facetFilter } = githubSlice.actions;
+export const { sortByDate, searchFilter, facetFilter, paginationFilter } =
+  githubSlice.actions;
 
 export const githubSelector = (state) => state.github;
