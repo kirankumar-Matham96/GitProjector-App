@@ -33,7 +33,6 @@ const INITIAL_STATE = {
   userId: "",
   repos: [],
   filteredRepos: [],
-  // paginatedRepos: [],
   isLoading: false,
   isError: false,
   error: null,
@@ -60,7 +59,30 @@ const githubSlice = createSlice({
       });
     },
     sortByDate: (state, action) => {
-      state.filteredRepos = state.filteredRepos;
+      state.activeFilters.sortBy = action.payload;
+
+      const parseDate = (dateString) => {
+        const date = new Date(dateString);
+        return isNaN(date) ? 0 : date; // Fallback to epoch time if date is invalid
+      };
+
+      const sortOptions = {
+        createdDateAsc: (a, b) =>
+          parseDate(a.created_at) - parseDate(b.created_at),
+        createdDateDesc: (a, b) =>
+          parseDate(b.created_at) - parseDate(a.created_at),
+        updatedDateAsc: (a, b) =>
+          parseDate(a.pushed_at) - parseDate(b.pushed_at),
+        updatedDateDesc: (a, b) =>
+          parseDate(b.pushed_at) - parseDate(a.pushed_at),
+      };
+
+      // Create a new array with sorted results
+      const sortedRepos = [...state.filteredRepos].sort(
+        sortOptions[state.activeFilters.sortBy] || (() => 0)
+      );
+
+      state.filteredRepos = sortedRepos;
     },
     facetFilter: (state, action) => {},
     paginationFilter: (state, action) => {},

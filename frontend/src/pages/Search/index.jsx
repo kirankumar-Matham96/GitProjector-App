@@ -4,6 +4,7 @@ import SearchBox from "../../components/SearchBox";
 import SearchResults from "../../components/SearchResults";
 import GithubAuth from "../../components/GithubAuth";
 import { githubSelector, getAllRepos } from "../../redux/githubSlice";
+import Sort from "../../components/Sort";
 import styles from "./index.module.scss";
 
 const Search = () => {
@@ -23,7 +24,23 @@ const Search = () => {
       <div>
         <SearchBox />
       </div>
-      <div className={styles.resultsContainer}>{user ? <SearchResults /> : <GithubAuth />}</div>
+
+      <div className={styles.resultsContainer}>
+        {/* {user ? <SearchResults /> : <GithubAuth />} */}
+
+        {user ? (
+          <div className={styles.resultsPageContent}>
+            <div className={styles.sort}>
+              <Sort />
+            </div>
+            <div>
+              <SearchResults />
+            </div>
+          </div>
+        ) : (
+          <GithubAuth />
+        )}
+      </div>
     </div>
   );
 };

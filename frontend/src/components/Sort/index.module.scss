@@ -1,0 +1,48 @@
+@use "../../styles/utilities" as *;
+
+.sortContainer {
+  border: 2px solid white;
+  display: inline-block;
+  height: 2rem;
+  min-width: 15.5rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+  position: relative;
+}
+
+.sortSelectedOptionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sortSelectedOption {
+  font-weight: 600;
+}
+
+.sortSelectedOptionIcon {
+  padding-top: 2px;
+}
+
+.sortOptionsContainer {
+  list-style-type: none;
+  position: fixed;
+  margin-top: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.9);
+  transition: all 0.5s ease-in-out;
+}
+
+.sortOption {
+  padding: 0.3rem 0.9rem;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid white;
+    border-radius: 8px;
+  }
+
+  &:active {
+    background-color: white;
+    color: black;
+    font-weight: 600;
+  }
+}

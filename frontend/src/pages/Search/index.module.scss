@@ -7,3 +7,13 @@
 .resultsContainer {
   padding: 2rem 0;
 }
+
+.resultsPageContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.sort {
+  float: right;
+}
