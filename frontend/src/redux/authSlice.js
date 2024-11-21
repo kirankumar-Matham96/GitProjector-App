@@ -30,6 +30,7 @@ const initialState = {
   email: "",
   token: "",
   isLoading: false,
+  isSuccess: false,
   isError: false,
   error: null,
 };
@@ -44,6 +45,7 @@ const authSlice = createSlice({
       state.userName = "";
       state.email = "";
       state.isLoading = false;
+      state.isSuccess = false;
     },
   },
   extraReducers: (builder) => {
@@ -53,6 +55,7 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(signup.fulfilled, (state, action) => {
+        state.isSuccess = true;
         state.isLoading = false;
         alert("User added successfully!");
       })

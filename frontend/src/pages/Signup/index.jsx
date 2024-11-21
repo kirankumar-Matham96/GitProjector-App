@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,6 +14,7 @@ const Signup = () => {
   const email = useRef();
   const password = useRef();
   const confirmPassword = useRef();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,13 +32,14 @@ const Signup = () => {
   };
 
   useEffect(() => {
-    if (!auth.isLoading) {
+    if (!auth.isLoading && auth.isSuccess) {
       name.current.value = "";
       email.current.value = "";
       password.current.value = "";
       confirmPassword.current.value = "";
+      navigate("/signin");
     }
-  }, [auth.isLoading]);
+  }, [auth.isLoading, auth.isSuccess]);
 
   return (
     <div className={styles.bg_signup}>

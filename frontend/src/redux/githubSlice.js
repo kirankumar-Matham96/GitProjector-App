@@ -15,6 +15,7 @@ export const githubLogin = createAsyncThunk(
     }
   }
 );
+
 export const getAllRepos = createAsyncThunk(
   "github/getAllRepos",
   async (args, thunkApi) => {
@@ -32,9 +33,17 @@ const INITIAL_STATE = {
   userId: "",
   repos: [],
   filteredRepos: [],
+  // paginatedRepos: [],
   isLoading: false,
   isError: false,
   error: null,
+  currentPage: 1,
+  perPage: 10,
+  activeFilters: {
+    searchTerm: "",
+    facets: {},
+    sortBy: "dateAsc",
+  },
 };
 
 const githubSlice = createSlice({
@@ -42,14 +51,19 @@ const githubSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     searchFilter: (state, action) => {
+      const searchTerm = action.payload?.toLowerCase().trim();
+      state.activeFilters.searchTerm = searchTerm;
       state.filteredRepos = state.repos.filter((repo) => {
-        if (repo.name?.includes(action.payload)) {
+        if (repo.name?.toLowerCase().includes(searchTerm)) {
           return repo;
         }
       });
     },
-    sortByDate: (state, action) => {},
+    sortByDate: (state, action) => {
+      state.filteredRepos = state.filteredRepos;
+    },
     facetFilter: (state, action) => {},
+    paginationFilter: (state, action) => {},
   },
   extraReducers: (builder) => {
     builder
