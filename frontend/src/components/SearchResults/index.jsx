@@ -1,10 +1,12 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { githubSelector } from "../../redux/githubSlice";
+import { githubSelector, paginationFilter } from "../../redux/githubSlice";
 import SearchResult from "../SearchResult";
 import styles from "./index.module.scss";
 
 const SearchResults = () => {
-  const { paginatedRepos } = useSelector(githubSelector);
+const { paginatedRepos } = useSelector(githubSelector);
+
   return (
     <div className={styles.resultsBgContainer}>
       <h2>Search Results</h2>

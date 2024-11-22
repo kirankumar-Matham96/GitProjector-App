@@ -84,6 +84,10 @@ const githubSlice = createSlice({
       );
 
       state.filteredRepos = sortedRepos;
+      state.paginatedRepos = state.filteredRepos.slice(
+        (state.currentPage - 1) * state.perPage,
+        (state.currentPage - 1) * state.perPage + state.perPage
+      );
     },
     facetFilter: (state, action) => {},
     paginationFilter: (state, action) => {
@@ -115,6 +119,10 @@ const githubSlice = createSlice({
       .addCase(getAllRepos.fulfilled, (state, action) => {
         state.repos = action.payload.repos;
         state.filteredRepos = action.payload.repos;
+        state.paginatedRepos = action.payload.repos.slice(
+          state.currentPage - 1,
+          state.perPage
+        );
         state.isLoading = false;
       })
       .addCase(getAllRepos.rejected, (state, action) => {
