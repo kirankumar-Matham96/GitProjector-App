@@ -1,16 +1,15 @@
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { githubSelector, paginationFilter } from "../../redux/githubSlice";
+import { githubSelector } from "../../redux/githubSlice";
 import SearchResult from "../SearchResult";
 import styles from "./index.module.scss";
 
 const SearchResults = () => {
-const { paginatedRepos } = useSelector(githubSelector);
+  const { filteredRepos } = useSelector(githubSelector);
 
   return (
     <div className={styles.resultsBgContainer}>
       <h2>Search Results</h2>
-      {paginatedRepos.map((repo) => (
+      {filteredRepos.map((repo) => (
         <div className={styles.resultsContainer} key={repo.id}>
           <SearchResult
             title={repo.name}

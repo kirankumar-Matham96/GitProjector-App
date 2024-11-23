@@ -5,7 +5,8 @@ import SearchResults from "../../components/SearchResults";
 import GithubAuth from "../../components/GithubAuth";
 import { githubSelector, getAllRepos } from "../../redux/githubSlice";
 import Sort from "../../components/Sort";
-import Pagination from "../../components/Pagination";
+// import Pagination from "../../components/Pagination";
+import Facet from "../../components/Facet";
 import styles from "./index.module.scss";
 
 const Search = () => {
@@ -19,6 +20,10 @@ const Search = () => {
       dispatch(getAllRepos());
     }
   }, [userId]);
+
+  const tags = ["react", "node", "mongoDB", "express", "Javascript"];
+  const languages = ["Java", "Javascript", "Python", "C", "HTML", "CSS"];
+  const types = ["Public", "Private", "Forked"];
 
   return (
     <div className={styles.bgContainer}>
@@ -35,6 +40,11 @@ const Search = () => {
               <Sort />
             </div>
             <div>
+              <Facet title="Tags" options={tags} />
+              <Facet title="Language" options={languages} />
+              <Facet title="Type" options={types} />
+            </div>
+            <div>
               <SearchResults />
             </div>
           </div>
@@ -42,9 +52,7 @@ const Search = () => {
           <GithubAuth />
         )}
       </div>
-      <div>
-        <Pagination />
-      </div>
+      <div>{/* <Pagination /> */}</div>
     </div>
   );
 };

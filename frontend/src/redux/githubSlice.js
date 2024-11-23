@@ -33,7 +33,6 @@ const INITIAL_STATE = {
   userId: "",
   repos: [],
   filteredRepos: [],
-  paginatedRepos: [],
   isLoading: false,
   isError: false,
   error: null,
@@ -41,8 +40,8 @@ const INITIAL_STATE = {
   perPage: 10,
   activeFilters: {
     searchTerm: "",
-    facets: {},
-    sortBy: "dateAsc",
+    facets: [],
+    sortBy: "",
   },
 };
 
@@ -79,25 +78,55 @@ const githubSlice = createSlice({
       };
 
       // Create a new array with sorted results
-      const sortedRepos = [...state.filteredRepos].sort(
+      const sortedRepos = [...state.repos].sort(
         sortOptions[state.activeFilters.sortBy] || (() => 0)
       );
-
       state.filteredRepos = sortedRepos;
-      state.paginatedRepos = state.filteredRepos.slice(
-        (state.currentPage - 1) * state.perPage,
-        (state.currentPage - 1) * state.perPage + state.perPage
-      );
     },
-    facetFilter: (state, action) => {},
-    paginationFilter: (state, action) => {
-      const { page, perPage } = action.payload;
-      state.currentPage = page;
-      state.perPage = perPage;
-      const startIndex = (page - 1) * perPage;
-      const endIndex = startIndex + perPage;
-      state.paginatedRepos = state.filteredRepos.slice(startIndex, endIndex);
+    facetFilter: (state, action) => {
+      const foundFacetIndex =
+        state.activeFilters.facets &&
+        state.activeFilters.facets?.length > 0 &&
+        state.activeFilters.facets.findIndex(
+          (item) => item.title === action.payload.title
+        );
+      if (foundFacetIndex === -1 || !foundFacetIndex) {
+        state.activeFilters.facets.push(action.payload);
+      } else {
+        state.activeFilters.facets[foundFacetIndex].options = options;
+      }
+
+      state.filteredRepos = state.repos.filter((repo) => {
+        // Check if the repo satisfies all active filter conditions
+        return state.activeFilters.facets.every((facet) => {
+          console.log(
+            "🚀 ~ returnstate.activeFilters.facets.every ~ facet:",
+            JSON.stringify(facet)
+          );
+          // If no options are selected for this facet, include all repos
+          if (!facet.options.length) return true;
+
+          // Check the repo's corresponding field (e.g., languages, tags, type)
+          const repoField = repo[facet.title.toLowerCase()];
+          if (!repoField) return false;
+
+          // Ensure at least one option matches
+          return facet.options.some((option) => repoField.includes(option));
+        });
+      });
+
+      // state.filteredRepos = state.repos.filter((repo) => {
+      //   repo;
+      // });
     },
+    // paginationFilter: (state, action) => {
+    //   const { page, perPage } = action.payload;
+    //   state.currentPage = page;
+    //   state.perPage = perPage;
+    //   const startIndex = (page - 1) * perPage;
+    //   const endIndex = startIndex + perPage;
+    //   state.paginatedRepos = state.filteredRepos.slice(startIndex, endIndex);
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -135,7 +164,8 @@ const githubSlice = createSlice({
 
 export default githubSlice.reducer;
 
-export const { sortByDate, searchFilter, facetFilter, paginationFilter } =
-  githubSlice.actions;
+/*paginationFilter*/
+
+export const { sortByDate, searchFilter, facetFilter } = githubSlice.actions;
 
 export const githubSelector = (state) => state.github;
