@@ -2,7 +2,7 @@ import { Octokit } from "octokit"; // Import Octokit for GitHub API integration
 import { createOrUpdateTextFile } from "@octokit/plugin-create-or-update-text-file"; // Import the plugin for creating or updating text files
 // import { createOAuthDeviceAuth } from "@octokit/auth-oauth-device"; // Import OAuth device authentication strategy
 
-class GithubRepository {
+export class GithubRepository {
   #userName; // Private variable to store the user's GitHub username
   octokit; // Octokit instance for making API requests
 
@@ -162,6 +162,4 @@ class GithubRepository {
       throw error; // Pass the error to the next middleware
     }
   };
-
-  getReadmeContent = () => {};
 }

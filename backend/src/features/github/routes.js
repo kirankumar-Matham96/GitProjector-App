@@ -62,7 +62,7 @@ gitRouter.get("/readme", githubController.getReadme); // Route to get README con
  * @returns {object} 200 - Success message after updating README
  * @returns {Error}  400 - Bad request error
  */
-gitRouter.put("/readme", githubController.updateReadme); // Route to update README content
+// gitRouter.put("/readme", githubController.updateReadme); // Route to update README content
 
 /**
  * Route for updating the README file with a plugin (currently commented out)
