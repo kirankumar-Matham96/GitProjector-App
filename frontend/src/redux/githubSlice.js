@@ -96,28 +96,33 @@ const githubSlice = createSlice({
         state.activeFilters.facets[foundFacetIndex].options = options;
       }
 
-      state.filteredRepos = state.repos.filter((repo) => {
-        // Check if the repo satisfies all active filter conditions
-        return state.activeFilters.facets.every((facet) => {
-          console.log(
-            "🚀 ~ returnstate.activeFilters.facets.every ~ facet:",
-            JSON.stringify(facet)
-          );
-          // If no options are selected for this facet, include all repos
-          if (!facet.options.length) return true;
-
-          // Check the repo's corresponding field (e.g., languages, tags, type)
-          const repoField = repo[facet.title.toLowerCase()];
-          if (!repoField) return false;
-
-          // Ensure at least one option matches
-          return facet.options.some((option) => repoField.includes(option));
-        });
-      });
-
       // state.filteredRepos = state.repos.filter((repo) => {
-      //   repo;
+      //   // Check if the repo satisfies all active filter conditions
+      //   return state.activeFilters.facets.every((facet) => {
+      //     console.log(
+      //       "🚀 ~ returnstate.activeFilters.facets.every ~ facet:",
+      //       JSON.stringify(facet)
+      //     );
+      //     // If no options are selected for this facet, include all repos
+      //     if (!facet.options.length) return true;
+
+      //     // Check the repo's corresponding field (e.g., languages, tags, type)
+      //     const repoField = repo[facet.title.toLowerCase()];
+      //     if (!repoField) return false;
+
+      //     // Ensure at least one option matches
+      //     return facet.options.some((option) => repoField.includes(option));
+      //   });
       // });
+
+      state.facets.map(facet => {
+        facet.options.filter(option => {
+          state.filteredRepos.map(repo => {
+            repo.language  
+          })
+        })
+      })
+
     },
     // paginationFilter: (state, action) => {
     //   const { page, perPage } = action.payload;

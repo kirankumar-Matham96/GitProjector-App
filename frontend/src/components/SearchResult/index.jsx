@@ -1,10 +1,13 @@
 import React from "react";
 import styles from "./index.module.scss";
-import Tag from "../Tag";
 import Tags from "../Tags";
 
 const SearchResult = (props) => {
   const { title, description, createdAt, languages, tags, pushedAt } = props;
+  console.log("🚀 ~ SearchResult ~ languages:", languages);
+
+  const languageKeys = Object.keys(languages);
+  console.log("🚀 ~ SearchResult ~ languageKeys:", languageKeys);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -21,8 +24,17 @@ const SearchResult = (props) => {
         <h4>{title}</h4>
         <p>{description}</p>
         <p>
-          {languages && <strong>Languages: </strong>}
-          {languages && languages}
+          {languageKeys.length > 0 && (
+            <div>
+              <strong>Languages: </strong>
+              {languageKeys.map((languageKey, index) => (
+                <span>
+                  {languageKey}
+                  {languageKeys.length - 1 !== index && ", "}
+                </span>
+              ))}
+            </div>
+          )}
         </p>
         <div className={styles.tagsContainer}>
           <Tags tags={tags} />
