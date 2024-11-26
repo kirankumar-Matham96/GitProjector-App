@@ -84,44 +84,31 @@ const githubSlice = createSlice({
       state.filteredRepos = sortedRepos;
     },
     facetFilter: (state, action) => {
-      const foundFacetIndex =
-        state.activeFilters.facets &&
-        state.activeFilters.facets?.length > 0 &&
-        state.activeFilters.facets.findIndex(
-          (item) => item.title === action.payload.title
-        );
-      if (foundFacetIndex === -1 || !foundFacetIndex) {
+      const foundFacetIndex = state.activeFilters.facets.findIndex(
+        (item) => item.title === action.payload.title
+      );
+
+      // Update or replace facet options
+      if (foundFacetIndex === -1) {
         state.activeFilters.facets.push(action.payload);
       } else {
         state.activeFilters.facets[foundFacetIndex].options =
           action.payload.options;
       }
 
-      // state.filteredRepos = state.repos.filter((repo) => {
-      //   // Check if the repo satisfies all active filter conditions
-      //   return state.activeFilters.facets.every((facet) => {
-      //     // If no options are selected for this facet, include all repos
-      //     if (!facet.options.length) return true;
-
-      //     // Check the repo's corresponding field (e.g., languages, tags, type)
-      //     const repoField = repo[facet.title.toLowerCase()];
-      //     if (!repoField) return false;
-
-      //     // Ensure at least one option matches
-      //     return facet.options.some((option) => repoField.includes(option));
-      //   });
-      // });
-
-      // BUG:
-      state.activeFilters.facets.map((facet) => {
-        facet.options.length > 0 &&
-          facet.options.filter((option) => {
-            state.filteredRepos.map((repo) => {
-              repo.language;
-            });
-          });
+      const facetFilteredRepos = state.repos.filter((repo) => {
+        return state.activeFilters.facets.every((facet) => {
+          if (!facet.options.length) return true;
+          const repoField = repo[facet.title.toLowerCase()];
+          if (!repoField) return false;
+          return facet.options.some((option) =>
+            repoField.map((field) => field.toLowerCase()).includes(option)
+          );
+        });
       });
+      state.filteredRepos = facetFilteredRepos;
     },
+
     // paginationFilter: (state, action) => {
     //   const { page, perPage } = action.payload;
     //   state.currentPage = page;

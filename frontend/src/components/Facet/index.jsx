@@ -6,14 +6,7 @@ import styles from "./index.module.scss";
 import { useDispatch } from "react-redux";
 
 const Facet = ({ title, options }) => {
-  const modifiedTitle =
-    title === "Languages"
-      ? "language"
-      : title === "Tags"
-      ? "topics"
-      : title === "Type"
-      ? "visibility"
-      : title.toLowerCase();
+  const modifiedTitle = title === "Tags" ? "topics" : title.toLowerCase();
 
   const [selected, setSelected] = useState([]);
 

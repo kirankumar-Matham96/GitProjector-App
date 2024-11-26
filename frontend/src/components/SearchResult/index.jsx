@@ -4,7 +4,6 @@ import Tags from "../Tags";
 
 const SearchResult = (props) => {
   const { title, description, createdAt, languages, tags, pushedAt } = props;
-  const languageKeys = Object.keys(languages);
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return `${date.getFullYear()}-${
@@ -20,13 +19,13 @@ const SearchResult = (props) => {
         <h4>{title}</h4>
         <p>{description}</p>
         <p>
-          {languageKeys.length > 0 && (
+          {languages.length > 0 && (
             <div>
               <strong>Languages: </strong>
-              {languageKeys.map((languageKey, index) => (
-                <span key={`${languageKey}_${index}`}>
-                  {languageKey}
-                  {languageKeys.length - 1 !== index && ", "}
+              {languages.map((language, index) => (
+                <span key={`${language}_${index}`}>
+                  {language}
+                  {languages.length - 1 !== index && ", "}
                 </span>
               ))}
             </div>

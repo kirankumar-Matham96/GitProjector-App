@@ -41,8 +41,7 @@ const Search = () => {
             </div>
             <div>
               <Facet title="Tags" options={tags} />
-              <Facet title="Language" options={languages} />
-              <Facet title="Type" options={types} />
+              <Facet title="Languages" options={languages} />
             </div>
             <div>
               <SearchResults />
