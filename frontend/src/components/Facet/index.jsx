@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
-import { githubSelector, facetFilter } from "../../redux/githubSlice.js";
+import { facetFilter } from "../../redux/githubSlice.js";
 import styles from "./index.module.scss";
 import { useDispatch } from "react-redux";
 
@@ -11,17 +11,19 @@ const Facet = ({ title, options }) => {
       ? "language"
       : title === "Tags"
       ? "topics"
-      : title === "type"
+      : title === "Type"
       ? "visibility"
       : title.toLowerCase();
+
   const [selected, setSelected] = useState([]);
+
   const dispatch = useDispatch();
+
   const handleChange = (e) => {
     const { id, checked } = e.target;
-
     const updatedSelection = checked
       ? [...selected, id.toLowerCase().split("_")[0]]
-      : selected.filter((option) => option.id !== id);
+      : selected.filter((option) => option !== id.toLowerCase().split("_")[0]);
     setSelected(updatedSelection);
     dispatch(
       facetFilter({
@@ -46,19 +48,23 @@ const Facet = ({ title, options }) => {
       </div>
 
       <ul className={styles.facetListContainer}>
-        {options.map((option, index) => (
-          <li className={styles.listItem} key={`${option}_${index}`}>
-            <Input
-              onChange={handleChange}
-              type="checkbox"
-              className={styles.checkbox}
-              id={`${option.toLowerCase()}_${index}`}
-              checked={selected.includes(`${option.toLowerCase()}_${index}`)}
-            />
-            &nbsp;
-            <label htmlFor={`${option.toLowerCase()}_${index}`}>{option}</label>
-          </li>
-        ))}
+        {options.map((option, index) => {
+          return (
+            <li className={styles.listItem} key={`${option}_${index}`}>
+              <Input
+                onChange={handleChange}
+                type="checkbox"
+                className={styles.checkbox}
+                id={`${option.toLowerCase()}_${index}`}
+                checked={selected.includes(option.toLowerCase())}
+              />
+              &nbsp;
+              <label htmlFor={`${option.toLowerCase()}_${index}`}>
+                {option}
+              </label>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

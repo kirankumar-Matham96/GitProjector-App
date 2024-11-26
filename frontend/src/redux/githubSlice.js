@@ -93,16 +93,13 @@ const githubSlice = createSlice({
       if (foundFacetIndex === -1 || !foundFacetIndex) {
         state.activeFilters.facets.push(action.payload);
       } else {
-        state.activeFilters.facets[foundFacetIndex].options = options;
+        state.activeFilters.facets[foundFacetIndex].options =
+          action.payload.options;
       }
 
       // state.filteredRepos = state.repos.filter((repo) => {
       //   // Check if the repo satisfies all active filter conditions
       //   return state.activeFilters.facets.every((facet) => {
-      //     console.log(
-      //       "🚀 ~ returnstate.activeFilters.facets.every ~ facet:",
-      //       JSON.stringify(facet)
-      //     );
       //     // If no options are selected for this facet, include all repos
       //     if (!facet.options.length) return true;
 
@@ -115,14 +112,15 @@ const githubSlice = createSlice({
       //   });
       // });
 
-      state.facets.map(facet => {
-        facet.options.filter(option => {
-          state.filteredRepos.map(repo => {
-            repo.language  
-          })
-        })
-      })
-
+      // BUG:
+      state.activeFilters.facets.map((facet) => {
+        facet.options.length > 0 &&
+          facet.options.filter((option) => {
+            state.filteredRepos.map((repo) => {
+              repo.language;
+            });
+          });
+      });
     },
     // paginationFilter: (state, action) => {
     //   const { page, perPage } = action.payload;
