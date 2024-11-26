@@ -56,7 +56,7 @@ class GithubController {
             visibility: repo.visibility,
           };
           const languages = await this.githubRepository.getLanguages(repo.name);
-          repoData.languages = languages;
+          repoData.languages = Object.keys(languages);
           return repoData;
         })
       );
