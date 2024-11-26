@@ -1,8 +1,3 @@
-// import { Octokit } from "octokit"; // Import Octokit for GitHub API integration
-// import { createOrUpdateTextFile } from "@octokit/plugin-create-or-update-text-file"; // Import the plugin for creating or updating text files
-// import { createOAuthDeviceAuth } from "@octokit/auth-oauth-device"; // Import OAuth device authentication strategy
-// import { CustomError } from "../../utils/customError.js"; // Import custom error handling class
-
 import { GithubRepository } from "./repository.js";
 
 class GithubController {
@@ -44,15 +39,30 @@ class GithubController {
   getAllRepos = async (req, res, next) => {
     try {
       const repos = await this.githubRepository.getRepos();
-      console.log("🚀 ~ GithubController ~ getAllRepos= ~ repos:", repos);
 
       // get languages for each repo
-      repos.map(async (repo) => {
-        const languages = await this.githubRepository.getLanguages(repo.id);
-        repos.languages = languages;
-      });
-
-      res.status(200).json({ success: true, repos }); // Send the list of repositories
+      const reposDataNeeded = await Promise.all(
+        repos.map(async (repo) => {
+          const repoData = {
+            id: repo.id,
+            name: repo.name,
+            full_name: repo.full_name,
+            html_url: repo.html_url,
+            description: repo.description,
+            fork: repo.fork,
+            created_at: repo.created_at,
+            pushed_at: repo.pushed_at,
+            topics: repo.topics,
+          };
+          const languages = await this.githubRepository.getLanguages(repo.name);
+          repoData.languages = languages;
+          return repoData;
+        })
+      );
+      res.status(200).json({
+        success: true,
+        repos: reposDataNeeded,
+      }); // Send the list of repositories
     } catch (error) {
       next(error); // Pass the error to the next middleware
     }
