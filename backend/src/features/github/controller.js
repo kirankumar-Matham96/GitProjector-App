@@ -53,6 +53,7 @@ class GithubController {
             created_at: repo.created_at,
             pushed_at: repo.pushed_at,
             topics: repo.topics,
+            visibility: repo.visibility,
           };
           const languages = await this.githubRepository.getLanguages(repo.name);
           repoData.languages = languages;
