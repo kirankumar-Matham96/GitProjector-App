@@ -27,31 +27,31 @@ const Search = () => {
 
   return (
     <div className={styles.bgContainer}>
-      <div>
-        <SearchBox />
-      </div>
-
-      <div className={styles.resultsContainer}>
-        {user ? (
-          <div className={styles.resultsPageContent}>
-            <div className={styles.sort}>
+      {user ? (
+        <div className={styles.searchPageContainer}>
+          <div className={styles.facetsContainer}>
+            <Facet title="Tags" options={tags} />
+            <Facet title="Languages" options={languages} />
+          </div>
+          <div className={styles.mainSearchContainer}>
+            <div className={styles.searchBoxContainer}>
+              <SearchBox />
+            </div>
+            <div className={styles.sortContainer}>
+              <h2>Search Results</h2>
               <Sort />
             </div>
-            <div>
-              <Facet title="Tags" options={tags} />
-              <Facet title="Languages" options={languages} />
-            </div>
-            <div>
+            <div className={styles.resultsContainer}>
               <SearchResults />
             </div>
+            <div className={styles.paginationContainer}>
+              <Pagination />
+            </div>
           </div>
-        ) : (
-          <GithubAuth />
-        )}
-      </div>
-      <div>
-        <Pagination />
-      </div>
+        </div>
+      ) : (
+        <GithubAuth />
+      )}
     </div>
   );
 };

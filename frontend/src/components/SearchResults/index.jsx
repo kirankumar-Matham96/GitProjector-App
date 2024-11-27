@@ -8,7 +8,7 @@ const SearchResults = () => {
 
   return (
     <div className={styles.resultsBgContainer}>
-      <h2>Search Results</h2>
+      {/* <h2>Search Results</h2> */}
       {paginatedRepos.map((repo) => (
         <div className={styles.resultsContainer} key={repo.id}>
           <SearchResult

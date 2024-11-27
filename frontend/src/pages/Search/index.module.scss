@@ -4,16 +4,33 @@
   padding: 3rem;
 }
 
-.resultsContainer {
-  padding: 2rem 0;
+.searchPageContainer {
+  display: flex;
+  margin: 0 10rem;
 }
 
-.resultsPageContent {
+.facetsContainer {
+  margin-right: 2rem;
+}
+
+.mainSearchContainer {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
 }
 
-.sort {
-  float: right;
+.searchBoxContainer {
+  margin-bottom: 2rem;
+}
+
+.sortContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.resultsContainer {
+  width: 100%;
+}
+
+.paginationContainer {
 }

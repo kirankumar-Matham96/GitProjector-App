@@ -53,13 +53,14 @@ const Pagination = () => {
           <IoIosArrowBack /> Previous
         </Button>
         {pageNumbers.map((page) => (
-          <button
+          <Button
+            className={styles.button}
             key={page}
             onClick={() => goToPage(page)}
             disabled={currentPage === page}
           >
             {page}
-          </button>
+          </Button>
         ))}
         <Button
           className={styles.button}

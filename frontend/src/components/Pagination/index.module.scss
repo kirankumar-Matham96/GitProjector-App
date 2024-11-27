@@ -1,6 +1,8 @@
 .pagination {
   display: flex;
-  justify-content: space-aroundz;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
 }
 
 .pager {
@@ -18,5 +20,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 0 0.2rem;
 }
