@@ -4,12 +4,12 @@ import SearchResult from "../SearchResult";
 import styles from "./index.module.scss";
 
 const SearchResults = () => {
-  const { filteredRepos } = useSelector(githubSelector);
+  const { filteredRepos, paginatedRepos } = useSelector(githubSelector);
 
   return (
     <div className={styles.resultsBgContainer}>
       <h2>Search Results</h2>
-      {filteredRepos.map((repo) => (
+      {paginatedRepos.map((repo) => (
         <div className={styles.resultsContainer} key={repo.id}>
           <SearchResult
             title={repo.name}

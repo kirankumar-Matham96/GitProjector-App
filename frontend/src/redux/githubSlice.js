@@ -73,6 +73,11 @@ const applyAllFilters = (state) => {
   }
 
   state.filteredRepos = results;
+
+  // pagination
+  const startIndex = (state.currentPage - 1) * state.perPage;
+  const endIndex = startIndex + state.perPage;
+  state.paginatedRepos = results.slice(startIndex, endIndex);
 };
 
 const INITIAL_STATE = {
@@ -80,6 +85,7 @@ const INITIAL_STATE = {
   userId: "",
   repos: [],
   filteredRepos: [],
+  paginatedRepos: [],
   isLoading: false,
   isError: false,
   error: null,
@@ -122,14 +128,12 @@ const githubSlice = createSlice({
       applyAllFilters(state);
     },
 
-    // paginationFilter: (state, action) => {
-    //   const { page, perPage } = action.payload;
-    //   state.currentPage = page;
-    //   state.perPage = perPage;
-    //   const startIndex = (page - 1) * perPage;
-    //   const endIndex = startIndex + perPage;
-    //   state.paginatedRepos = state.filteredRepos.slice(startIndex, endIndex);
-    // },
+    paginationFilter: (state, action) => {
+      const { page, perPage } = action.payload;
+      state.currentPage = page || state.currentPage;
+      state.perPage = perPage || state.perPage;
+      applyAllFilters(state);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -151,10 +155,9 @@ const githubSlice = createSlice({
       .addCase(getAllRepos.fulfilled, (state, action) => {
         state.repos = action.payload.repos;
         state.filteredRepos = action.payload.repos;
-        state.paginatedRepos = action.payload.repos.slice(
-          state.currentPage - 1,
-          state.perPage
-        );
+
+        state.currentPage = 1; // Reset to page 1
+        applyAllFilters(state); // Apply all filters including pagination
         state.isLoading = false;
       })
       .addCase(getAllRepos.rejected, (state, action) => {
@@ -167,8 +170,6 @@ const githubSlice = createSlice({
 
 export default githubSlice.reducer;
 
-/*paginationFilter*/
-
-export const { sortByDate, searchFilter, facetFilter } = githubSlice.actions;
+export const { sortByDate, searchFilter, facetFilter, paginationFilter } = githubSlice.actions;
 
 export const githubSelector = (state) => state.github;

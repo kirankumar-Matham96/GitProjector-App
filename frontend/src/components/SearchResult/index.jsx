@@ -20,7 +20,7 @@ const SearchResult = (props) => {
         <p>{description}</p>
         <p>
           {languages.length > 0 && (
-            <div>
+            <span>
               <strong>Languages: </strong>
               {languages.map((language, index) => (
                 <span key={`${language}_${index}`}>
@@ -28,7 +28,7 @@ const SearchResult = (props) => {
                   {languages.length - 1 !== index && ", "}
                 </span>
               ))}
-            </div>
+            </span>
           )}
         </p>
         <div className={styles.tagsContainer}>
