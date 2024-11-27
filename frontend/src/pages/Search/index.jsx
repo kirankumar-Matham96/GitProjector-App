@@ -32,8 +32,6 @@ const Search = () => {
       </div>
 
       <div className={styles.resultsContainer}>
-        {/* {user ? <SearchResults /> : <GithubAuth />} */}
-
         {user ? (
           <div className={styles.resultsPageContent}>
             <div className={styles.sort}>

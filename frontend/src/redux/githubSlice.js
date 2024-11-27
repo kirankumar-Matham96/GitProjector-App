@@ -28,6 +28,53 @@ export const getAllRepos = createAsyncThunk(
   }
 );
 
+const applyAllFilters = (state) => {
+  let results = [...state.repos];
+
+  // Search filter
+  if (state.activeFilters.searchTerm) {
+    const searchTerm = state.activeFilters.searchTerm.toLowerCase().trim();
+    results = results.filter((repo) =>
+      repo.name?.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  // Facet filter
+  results = results.filter((repo) => {
+    return state.activeFilters.facets.every((facet) => {
+      if (!facet.options.length) return true;
+      const repoField = repo[facet.title.toLowerCase()];
+      if (!repoField) return false;
+      return facet.options.some((option) =>
+        repoField
+          .map((field) => field.toLowerCase())
+          .includes(option.toLowerCase())
+      );
+    });
+  });
+
+  // Sort filter
+  const parseDate = (dateString) => {
+    const date = new Date(dateString);
+    return isNaN(date) ? 0 : date;
+  };
+
+  const sortOptions = {
+    createdDateAsc: (a, b) => parseDate(a.created_at) - parseDate(b.created_at),
+    createdDateDesc: (a, b) =>
+      parseDate(b.created_at) - parseDate(a.created_at),
+    updatedDateAsc: (a, b) => parseDate(a.pushed_at) - parseDate(b.pushed_at),
+    updatedDateDesc: (a, b) => parseDate(b.pushed_at) - parseDate(a.pushed_at),
+  };
+
+  const sortFunc = sortOptions[state.activeFilters.sortBy];
+  if (sortFunc) {
+    results = results.sort(sortFunc);
+  }
+
+  state.filteredRepos = results;
+};
+
 const INITIAL_STATE = {
   accessToken: "",
   userId: "",
@@ -50,38 +97,14 @@ const githubSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     searchFilter: (state, action) => {
-      const searchTerm = action.payload?.toLowerCase().trim();
-      state.activeFilters.searchTerm = searchTerm;
-      state.filteredRepos = state.repos.filter((repo) => {
-        if (repo.name?.toLowerCase().includes(searchTerm)) {
-          return repo;
-        }
-      });
+      state.activeFilters.searchTerm = action.payload?.toLowerCase().trim();
+
+      applyAllFilters(state);
     },
     sortByDate: (state, action) => {
       state.activeFilters.sortBy = action.payload;
 
-      const parseDate = (dateString) => {
-        const date = new Date(dateString);
-        return isNaN(date) ? 0 : date; // Fallback to epoch time if date is invalid
-      };
-
-      const sortOptions = {
-        createdDateAsc: (a, b) =>
-          parseDate(a.created_at) - parseDate(b.created_at),
-        createdDateDesc: (a, b) =>
-          parseDate(b.created_at) - parseDate(a.created_at),
-        updatedDateAsc: (a, b) =>
-          parseDate(a.pushed_at) - parseDate(b.pushed_at),
-        updatedDateDesc: (a, b) =>
-          parseDate(b.pushed_at) - parseDate(a.pushed_at),
-      };
-
-      // Create a new array with sorted results
-      const sortedRepos = [...state.repos].sort(
-        sortOptions[state.activeFilters.sortBy] || (() => 0)
-      );
-      state.filteredRepos = sortedRepos;
+      applyAllFilters(state);
     },
     facetFilter: (state, action) => {
       const foundFacetIndex = state.activeFilters.facets.findIndex(
@@ -96,17 +119,7 @@ const githubSlice = createSlice({
           action.payload.options;
       }
 
-      const facetFilteredRepos = state.repos.filter((repo) => {
-        return state.activeFilters.facets.every((facet) => {
-          if (!facet.options.length) return true;
-          const repoField = repo[facet.title.toLowerCase()];
-          if (!repoField) return false;
-          return facet.options.some((option) =>
-            repoField.map((field) => field.toLowerCase()).includes(option)
-          );
-        });
-      });
-      state.filteredRepos = facetFilteredRepos;
+      applyAllFilters(state);
     },
 
     // paginationFilter: (state, action) => {
