@@ -5,6 +5,7 @@ import Signin from "./pages/Signin";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Search from "./pages/Search";
+import RepoDetails from "./pages/RepoDetails";
 
 function App() {
   return (
@@ -16,8 +17,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/repo_details/:id" element={<RepoDetails />} />
           {/* 
-          <Route path="/signup" element={<Signup />} />
           <Route path="/signup" element={<Signup />} /> */}
         </Routes>
         <Footer />

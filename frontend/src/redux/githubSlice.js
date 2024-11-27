@@ -127,7 +127,6 @@ const githubSlice = createSlice({
 
       applyAllFilters(state);
     },
-
     paginationFilter: (state, action) => {
       const { page, perPage } = action.payload;
       state.currentPage = page || state.currentPage;
@@ -170,6 +169,7 @@ const githubSlice = createSlice({
 
 export default githubSlice.reducer;
 
-export const { sortByDate, searchFilter, facetFilter, paginationFilter } = githubSlice.actions;
+export const { sortByDate, searchFilter, facetFilter, paginationFilter } =
+  githubSlice.actions;
 
 export const githubSelector = (state) => state.github;

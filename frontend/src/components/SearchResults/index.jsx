@@ -12,6 +12,7 @@ const SearchResults = () => {
       {paginatedRepos.map((repo) => (
         <div className={styles.resultsContainer} key={repo.id}>
           <SearchResult
+            id={repo.id}
             title={repo.name}
             description={repo.description}
             tags={repo.topics}

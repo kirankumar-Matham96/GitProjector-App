@@ -1,0 +1,54 @@
+.bgContainer {
+  border: 1px solid purple;
+  margin: 1rem;
+}
+
+.basicDetailsContainer {
+  border: 1px solid purple;
+  margin: 1rem;
+  & .avatar{
+    width: 5rem;
+    height: 5rem;
+    border-radius: 22rem;
+  }
+}
+
+.repoStatisticsContainer {
+  border: 1px solid purple;
+  margin: 1rem;
+}
+
+.additionalMetadataContainer {
+  border: 1px solid purple;
+  margin: 1rem;
+}
+
+.repoActivityContainer {
+  border: 1px solid purple;
+  margin: 1rem;
+}
+
+.repoLinksAndActionsContainer {
+  border: 1px solid purple;
+  margin: 1rem;
+}
+
+.readmeContainer {
+  border: 1px solid purple;
+  margin: 1rem;
+}
+
+.codeInsightsContainer {
+  border: 1px solid purple;
+  margin: 1rem;
+}
+
+.issuesContainer {
+  border: 1px solid purple;
+  margin: 1rem;
+}
+
+.discussionsContainer {
+  border: 1px solid purple;
+  margin: 1rem;
+}

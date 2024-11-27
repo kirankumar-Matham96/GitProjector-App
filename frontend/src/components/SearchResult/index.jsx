@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./index.module.scss";
 import Tags from "../Tags";
 
@@ -16,7 +16,9 @@ const SearchResult = (props) => {
   return (
     <div className={styles.resultContainer}>
       <div className={styles.resultLeft}>
-        <h4>{title}</h4>
+        <h4>
+          <Link to={`/repo_details/${title}`}>{title}</Link>
+        </h4>
         <p>{description}</p>
         <p>
           {languages.length > 0 && (
