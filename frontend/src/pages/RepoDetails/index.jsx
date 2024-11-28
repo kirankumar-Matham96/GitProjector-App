@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { githubSelector } from "../../redux/githubSlice";
 import { useState, useEffect } from "react";
 import Readme from "../../components/Readme";
+import Tags from "../../components/Tags";
 import styles from "./index.module.scss";
 
 const RepoDetails = () => {
@@ -27,19 +28,29 @@ const RepoDetails = () => {
       ) : (
         <div className={styles.bgContainer}>
           <div className={styles.basicDetailsContainer}>
-            <p>Repo Name: {repo?.name}</p>
-            <p>
-              Owner:{"  "}
-              <a href={repo?.owner?.html_url} target="_blank">
-                <img
-                  className={styles.avatar}
-                  src={repo?.owner?.avatar_url}
-                  alt={repo?.owner?.login}
-                />
-                Avatar + {repo?.owner?.login}
+            <div className={styles.basicDetailsLeft}>
+              <a href={repo?.html_url} target="_blank">
+                <h3>{repo?.name}</h3>
               </a>
-            </p>
-            <p>Description: {repo?.description}</p>
+              <p>{repo?.description}</p>
+
+              {repo?.topics && <Tags tags={repo?.topics} />}
+              {/* <ul>
+                {repo?.topics?.map((topic) => (
+                  <li key={topic}>{topic}</li>
+                ))}
+              </ul> */}
+            </div>
+            <div className={styles.ownerDetails}>
+              <a href={repo?.owner?.html_url} target="_blank">
+                <p>{repo?.owner?.login}</p>
+              </a>
+              <img
+                className={styles.avatar}
+                src={repo?.owner?.avatar_url}
+                alt={repo?.owner?.login}
+              />
+            </div>
           </div>
           <div className={styles.repoStatisticsContainer}>
             <p>

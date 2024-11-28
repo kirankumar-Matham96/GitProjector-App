@@ -1,54 +1,72 @@
 .bgContainer {
-  border: 1px solid purple;
-  margin: 1rem;
+  // border: 1px solid purple;
+  margin: 5rem;
+  border-radius: 2rem;
+  box-shadow: 0 0 10px 10px red;
 }
 
 .basicDetailsContainer {
-  border: 1px solid purple;
+  // border: 1px solid purple;
   margin: 1rem;
+  box-shadow: 0 0 5px 2px purple;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  
+  & .basicDetailsLeft{
+    width: 70%;
+  }
+  
   & .avatar{
     width: 5rem;
     height: 5rem;
     border-radius: 22rem;
   }
+
+  & .ownerDetails{
+    display: flex;
+    // justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
 }
 
 .repoStatisticsContainer {
-  border: 1px solid purple;
+  // border: 1px solid purple;
   margin: 1rem;
 }
 
 .additionalMetadataContainer {
-  border: 1px solid purple;
+  // border: 1px solid purple;
   margin: 1rem;
 }
 
 .repoActivityContainer {
-  border: 1px solid purple;
+  // border: 1px solid purple;
   margin: 1rem;
 }
 
 .repoLinksAndActionsContainer {
-  border: 1px solid purple;
+  // border: 1px solid purple;
   margin: 1rem;
 }
 
 .readmeContainer {
-  border: 1px solid purple;
+  // border: 1px solid purple;
   margin: 1rem;
 }
 
 .codeInsightsContainer {
-  border: 1px solid purple;
+  // border: 1px solid purple;
   margin: 1rem;
 }
 
 .issuesContainer {
-  border: 1px solid purple;
+  // border: 1px solid purple;
   margin: 1rem;
 }
 
 .discussionsContainer {
-  border: 1px solid purple;
+  // border: 1px solid purple;
   margin: 1rem;
 }
