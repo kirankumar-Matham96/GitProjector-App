@@ -20,6 +20,7 @@ class GithubApis {
       const resp = await axios.get(`${this.URL}/repos/login`, options);
       return resp.data;
     } catch (error) {
+      throw error;
     }
   };
 
@@ -31,6 +32,21 @@ class GithubApis {
       const resp = await axios.get(`${this.URL}/repos/all`, options);
       return resp.data;
     } catch (error) {
+      throw error;
+    }
+  };
+
+  getReadme = async (name) => {
+    try {
+      data.readmeName = name;
+      const options = {
+        headers: this.headers,
+        params: { repoName: name },
+      };
+      const resp = await axios.get(`${this.URL}/repos/readme`, options);
+      return resp;
+    } catch (error) {
+      throw error;
     }
   };
 }

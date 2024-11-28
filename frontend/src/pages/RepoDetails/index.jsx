@@ -2,20 +2,18 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { githubSelector } from "../../redux/githubSlice";
 import { useState, useEffect } from "react";
+import Readme from "../../components/Readme";
 import styles from "./index.module.scss";
 
 const RepoDetails = () => {
   const [repo, setRepo] = useState(null);
   const { id } = useParams();
-  // console.log("🚀 ~ RepoDetails ~ id:", id);
-
   // const dispatch = useDispatch();
   const { repos } = useSelector(githubSelector);
 
   useEffect(() => {
     // dispatch(getRepo(title));
     const repoFound = repos.find((repo) => repo.name === id);
-    console.log("🚀 ~ useEffect ~ repoFound:", repoFound);
     if (!repoFound) {
       setRepo(null);
     }
@@ -33,7 +31,11 @@ const RepoDetails = () => {
             <p>
               Owner:{"  "}
               <a href={repo?.owner?.html_url} target="_blank">
-                <img className={styles.avatar} src={repo?.owner?.avatar_url} alt={repo?.owner?.login} />
+                <img
+                  className={styles.avatar}
+                  src={repo?.owner?.avatar_url}
+                  alt={repo?.owner?.login}
+                />
                 Avatar + {repo?.owner?.login}
               </a>
             </p>
@@ -49,7 +51,7 @@ const RepoDetails = () => {
             <p>Languages Used (Chart)</p>
             <ul>
               {repo?.languages?.map((language) => (
-                <li>{language}</li>
+                <li key={language}>{language}</li>
               ))}
             </ul>
           </div>
@@ -72,7 +74,7 @@ const RepoDetails = () => {
           </div>
           <div className={styles.readmeContainer}>
             <h5>📂 README</h5>
-            <p>(Render README Content)</p>
+            {repo?.name && <Readme name={repo?.name} />}
           </div>
           <div className={styles.codeInsightsContainer}>
             <h5>Code</h5>

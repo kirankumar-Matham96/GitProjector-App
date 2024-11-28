@@ -28,6 +28,19 @@ export const getAllRepos = createAsyncThunk(
   }
 );
 
+export const getReadme = createAsyncThunk(
+  "github/getReadme",
+  async (repoName, thunkApi) => {
+    try {
+      const resp = await githubApis.getReadme(repoName);
+      console.log("🚀 ~ resp:", resp);
+      return resp;
+    } catch (error) {
+      thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
 const applyAllFilters = (state) => {
   let results = [...state.repos];
 
@@ -84,6 +97,7 @@ const INITIAL_STATE = {
   accessToken: "",
   userId: "",
   repos: [],
+  readmeContent: "",
   filteredRepos: [],
   paginatedRepos: [],
   isLoading: false,
@@ -160,9 +174,21 @@ const githubSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getAllRepos.rejected, (state, action) => {
-        state.isLoading = false;
         state.error = action.payload;
         state.isError = true;
+        state.isLoading = false;
+      })
+      .addCase(getReadme.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getReadme.fulfilled, (state, action) => {
+        state.readmeContent = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getReadme.rejected, (state, actions) => {
+        state.error = state.payload;
+        state.isError = true;
+        state.isLoading = false;
       });
   },
 });
