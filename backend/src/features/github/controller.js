@@ -131,7 +131,7 @@ class GithubController {
    */
   getReadme = async (req, res, next) => {
     try {
-      const { repoName } = req.body; // Extract the repository name from request body
+      const { repoName } = req.query; // Extract the repository name from request query parameters
       const { content } =
         await this.githubRepository.getReadmeFielContentAndDecrypt(repoName); // Get and decrypt README content
       res.status(200).json({ success: true, readme: content }); // Send the README content
