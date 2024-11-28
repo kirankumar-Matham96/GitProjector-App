@@ -38,13 +38,12 @@ class GithubApis {
 
   getReadme = async (name) => {
     try {
-      data.readmeName = name;
       const options = {
         headers: this.headers,
         params: { repoName: name },
       };
       const resp = await axios.get(`${this.URL}/repos/readme`, options);
-      return resp;
+      return resp.data;
     } catch (error) {
       throw error;
     }

@@ -11,7 +11,7 @@ export const githubLogin = createAsyncThunk(
       });
       return resp;
     } catch (error) {
-      thunkApi.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
@@ -23,7 +23,7 @@ export const getAllRepos = createAsyncThunk(
       const resp = await githubApis.getAllRepos();
       return resp;
     } catch (error) {
-      thunkApi.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
@@ -33,10 +33,9 @@ export const getReadme = createAsyncThunk(
   async (repoName, thunkApi) => {
     try {
       const resp = await githubApis.getReadme(repoName);
-      console.log("🚀 ~ resp:", resp);
-      return resp;
+      return resp.readme;
     } catch (error) {
-      thunkApi.rejectWithValue(error);
+      return thunkApi.rejectWithValue(error);
     }
   }
 );
@@ -185,8 +184,8 @@ const githubSlice = createSlice({
         state.readmeContent = action.payload;
         state.isLoading = false;
       })
-      .addCase(getReadme.rejected, (state, actions) => {
-        state.error = state.payload;
+      .addCase(getReadme.rejected, (state, action) => {
+        state.error = action.payload;
         state.isError = true;
         state.isLoading = false;
       });
