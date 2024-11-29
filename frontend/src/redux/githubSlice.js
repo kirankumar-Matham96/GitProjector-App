@@ -57,22 +57,10 @@ const applyAllFilters = (state) => {
       if (!facet.options.length) return true;
       const repoField = repo[facet.title.toLowerCase()];
       if (!repoField) return false;
-      
-      // return facet.options.some((option) => {
-      //   if (Array.isArray(repoField)) {
-      //     return repoField
-      //       .map((field) => field.toLowerCase())
-      //       .includes(option.toLowerCase());
-      //   }
-
-      //   return repoField
-      //       .entries((field, value) => field.toLowerCase())
-      //       .includes(option.toLowerCase());
-      // });
 
       return facet.options.some((option) => {
         const optionLower = option.toLowerCase();
-  
+
         if (Array.isArray(repoField)) {
           // Handle array fields
           return repoField.some((field) => field.toLowerCase() === optionLower);
@@ -81,9 +69,11 @@ const applyAllFilters = (state) => {
           return repoField.toLowerCase() === optionLower;
         } else if (typeof repoField === "object" && repoField !== null) {
           // Handle object fields (like { java: 12563, HTML: 85462 })
-          return Object.keys(repoField).some((key) => key.toLowerCase() === optionLower);
+          return Object.keys(repoField).some(
+            (key) => key.toLowerCase() === optionLower
+          );
         }
-  
+
         return false; // Exclude for unsupported types
       });
     });

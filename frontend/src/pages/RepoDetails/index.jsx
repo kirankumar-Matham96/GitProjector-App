@@ -56,53 +56,61 @@ const RepoDetails = () => {
               />
             </div>
           </div>
-          <div className={styles.languagesUsedContainer}>
-            <p>Languages Used (Chart)</p>
-            {repo?.languages && <Chart languages={repo?.languages} />}
-            {/* <ul>
-              {repo?.languages &&
-                Object.entries(repo?.languages).map(([language, value]) => (
-                  <li key={language}>
-                    {language}: {value}
-                  </li>
-                ))}
-            </ul> */}
-          </div>
-          <div className={styles.repoActivityContainer}>
-            <h5>📜 Recent Commits</h5>
-            <p>Commit 1: Message (Author) (Timestamp)</p>
-            <p>Commit 2: Message (Author) (Timestamp)</p>
-          </div>
-          <div className={styles.repoLinksAndActionsContainer}>
-            <h5>🌐 Links</h5>
-            <p>
-              <a href={repo?.html_url} target="_blank">
-                View on GitHub
-              </a>
-            </p>
-            <p>
-              <a href={repo?.clone_url}>Clone URL</a>
-            </p>
-            <p>Download Zip</p>
-          </div>
-          <div className={styles.readmeContainer}>
-            <h5>📂 README</h5>
-            {/* {repo?.name && <Readme name={repo?.name} />} */}
-          </div>
-          <div className={styles.codeInsightsContainer}>
-            <h5>Code</h5>
-            <p>Code snippet here with IDE like look</p>
-          </div>
-          <div className={styles.issuesContainer}>
-            <h5>Issues</h5>
-            <p>Issues:1</p>
-            <p>Issues:2</p>
-          </div>
-          <div className={styles.discussionsContainer}>
-            <h5>Discussions</h5>
-            <p>Discussion:1</p>
-            <p>Discussion:2</p>
-          </div>
+
+          <section className={styles.chartAndLinks}>
+            <div className={styles.languagesUsedContainer}>
+              <h4>Languages Used</h4>
+              {repo?.languages && (
+                <div className={styles.languageChartAndListContainer}>
+                  <Chart className={styles.chart} languages={repo?.languages} />{" "}
+                  <ul>
+                    {Object.keys(repo?.languages).map((language) => (
+                      <li key={language}>{language}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            <div className={styles.repoLinksAndActionsContainer}>
+              <h5>🌐 Links</h5>
+              <p>
+                <a href={repo?.html_url} target="_blank">
+                  View on GitHub
+                </a>
+              </p>
+              <p>
+                <a href={repo?.clone_url}>Clone URL</a>
+              </p>
+              <p>Download Zip</p>
+            </div>
+          </section>
+
+          <section className={styles.tabsSection}>
+            <div className={styles.readmeContainer}>
+              <h5>📂 README</h5>
+              {/* {repo?.name && <Readme name={repo?.name} />} */}
+            </div>
+            <div className={styles.codeInsightsContainer}>
+              <h5>Code</h5>
+              <p>Code snippet here with IDE like look</p>
+            </div>
+            <div className={styles.repoActivityContainer}>
+              <h5>📜 Recent Commits</h5>
+              <p>Commit 1: Message (Author) (Timestamp)</p>
+              <p>Commit 2: Message (Author) (Timestamp)</p>
+            </div>
+            <div className={styles.issuesContainer}>
+              <h5>Issues</h5>
+              <p>Issues:1</p>
+              <p>Issues:2</p>
+            </div>
+            <div className={styles.discussionsContainer}>
+              <h5>Discussions</h5>
+              <p>Discussion:1</p>
+              <p>Discussion:2</p>
+            </div>
+          </section>
         </div>
       )}
     </>

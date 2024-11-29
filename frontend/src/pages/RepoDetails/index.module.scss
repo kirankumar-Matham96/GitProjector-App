@@ -41,22 +41,49 @@
   margin: 0.5rem 0;
 }
 
+.chartAndLinks{
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .languagesUsedContainer {
   // border: 1px solid purple;
   margin: 1rem;
+  width: 50%;
   border: 1px solid red;
   display: flex;
   flex-direction: column;
 }
 
+.languageChartAndListContainer{
+  display: flex;
+  justify-content: space-around;
+  // align-items: center;
+  border: 1px solid white;
+  & ul {
+    margin-top: 7rem;
+  }
+}
+
+.chart{
+  border: 5px solid green;
+}
+
 .repoActivityContainer {
   // border: 1px solid purple;
+  border: 1px solid red;
   margin: 1rem;
 }
 
 .repoLinksAndActionsContainer {
   // border: 1px solid purple;
+  border: 1px solid red;
   margin: 1rem;
+  width: 50%;
+}
+
+.tabsSection {
+  border: 1px solid yellow;
 }
 
 .readmeContainer {

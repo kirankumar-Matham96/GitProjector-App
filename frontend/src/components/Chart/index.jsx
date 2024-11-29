@@ -28,7 +28,7 @@ const renderActiveShape = (props) => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill} fontSize={24}>
         {payload.name}
       </text>
       <Sector
@@ -74,9 +74,9 @@ const renderActiveShape = (props) => {
   );
 };
 
-export const Chart = ({ languages }) => {
+export const Chart = (props) => {
+  const { languages, className } = props;
   const data = [];
-
   Object.entries(languages).map(([language, value]) => {
     data.push({
       name: language,
@@ -93,15 +93,15 @@ export const Chart = ({ languages }) => {
   );
 
   return (
-    <PieChart width={500} height={450}>
+    <PieChart className={className} width={500} height={400}>
       <Pie
         activeIndex={activeIndex}
         activeShape={renderActiveShape}
         data={data}
         cx={250}
         cy={200}
-        innerRadius={60}
-        outerRadius={80}
+        innerRadius={70}
+        outerRadius={100}
         fill="#8884d8"
         dataKey="value"
         onMouseEnter={onPieEnter}
