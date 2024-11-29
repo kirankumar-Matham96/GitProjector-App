@@ -4,6 +4,7 @@ import { githubSelector } from "../../redux/githubSlice";
 import { useState, useEffect } from "react";
 import Readme from "../../components/Readme";
 import Tags from "../../components/Tags";
+import Tag from "../../components/Tag";
 import styles from "./index.module.scss";
 
 const RepoDetails = () => {
@@ -33,13 +34,15 @@ const RepoDetails = () => {
                 <h3>{repo?.name}</h3>
               </a>
               <p>{repo?.description}</p>
-
-              {repo?.topics && <Tags tags={repo?.topics} />}
-              {/* <ul>
-                {repo?.topics?.map((topic) => (
-                  <li key={topic}>{topic}</li>
-                ))}
-              </ul> */}
+              <div className={styles.repoTags}>
+                {repo?.topics && <Tags tags={repo?.topics} />}
+              </div>
+              <div className={styles.repoStatisticsContainer}>
+                <Tag tag={`⭐ Starred ${repo?.stargazers_count}`} />|
+                <Tag tag={`🍴 Forked ${repo?.forks_count}`} />|
+                <Tag tag={`👁 Watching ${repo?.watchers_count}`} />|
+                <Tag tag={`🐛 Open Issues ${repo?.open_issues}`} />
+              </div>
             </div>
             <div className={styles.ownerDetails}>
               <a href={repo?.owner?.html_url} target="_blank">
@@ -52,12 +55,12 @@ const RepoDetails = () => {
               />
             </div>
           </div>
-          <div className={styles.repoStatisticsContainer}>
+          {/* <div className={styles.repoStatisticsContainer}>
             <p>
               ⭐ {repo?.stargazers_count} | 🍴 {repo?.forks_count} | 👁{" "}
               {repo?.watchers_count} | 🐛 {repo?.open_issues}
             </p>
-          </div>
+          </div> */}
           <div className={styles.additionalMetadataContainer}>
             <p>Languages Used (Chart)</p>
             <ul>
@@ -85,7 +88,7 @@ const RepoDetails = () => {
           </div>
           <div className={styles.readmeContainer}>
             <h5>📂 README</h5>
-            {repo?.name && <Readme name={repo?.name} />}
+            {/* {repo?.name && <Readme name={repo?.name} />} */}
           </div>
           <div className={styles.codeInsightsContainer}>
             <h5>Code</h5>

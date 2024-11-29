@@ -12,28 +12,33 @@
   padding: 1rem;
   display: flex;
   justify-content: space-between;
-  
-  & .basicDetailsLeft{
+
+  & .basicDetailsLeft {
     width: 70%;
   }
-  
-  & .avatar{
+
+  & .avatar {
     width: 5rem;
     height: 5rem;
     border-radius: 22rem;
   }
 
-  & .ownerDetails{
+  & .ownerDetails {
     display: flex;
     // justify-content: center;
     align-items: center;
     gap: 1rem;
   }
+
+  & .repoTags {
+    margin: 0.5rem 0;
+  }
 }
 
 .repoStatisticsContainer {
-  // border: 1px solid purple;
-  margin: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
 }
 
 .additionalMetadataContainer {
