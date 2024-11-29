@@ -6,6 +6,7 @@ import Readme from "../../components/Readme";
 import Tags from "../../components/Tags";
 import Tag from "../../components/Tag";
 import styles from "./index.module.scss";
+import { Chart2 } from "../../components/Chart2";
 
 const RepoDetails = () => {
   const [repo, setRepo] = useState(null);
@@ -55,19 +56,17 @@ const RepoDetails = () => {
               />
             </div>
           </div>
-          {/* <div className={styles.repoStatisticsContainer}>
-            <p>
-              ⭐ {repo?.stargazers_count} | 🍴 {repo?.forks_count} | 👁{" "}
-              {repo?.watchers_count} | 🐛 {repo?.open_issues}
-            </p>
-          </div> */}
-          <div className={styles.additionalMetadataContainer}>
+          <div className={styles.languagesUsedContainer}>
             <p>Languages Used (Chart)</p>
-            <ul>
-              {repo?.languages?.map((language) => (
-                <li key={language}>{language}</li>
-              ))}
-            </ul>
+            {repo?.languages && <Chart2 languages={repo?.languages}/>}
+            {/* <ul>
+              {repo?.languages &&
+                Object.entries(repo?.languages).map(([language, value]) => (
+                  <li key={language}>
+                    {language}: {value}
+                  </li>
+                ))}
+            </ul> */}
           </div>
           <div className={styles.repoActivityContainer}>
             <h5>📜 Recent Commits</h5>

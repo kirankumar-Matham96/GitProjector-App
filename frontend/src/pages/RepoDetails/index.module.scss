@@ -41,9 +41,12 @@
   margin: 0.5rem 0;
 }
 
-.additionalMetadataContainer {
+.languagesUsedContainer {
   // border: 1px solid purple;
   margin: 1rem;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
 }
 
 .repoActivityContainer {

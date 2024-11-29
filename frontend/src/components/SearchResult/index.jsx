@@ -13,6 +13,8 @@ const SearchResult = (props) => {
     }-${date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}`;
   };
 
+  const languagesKeys = Object.keys(languages);
+
   return (
     <div className={styles.resultContainer}>
       <div className={styles.resultLeft}>
@@ -21,13 +23,13 @@ const SearchResult = (props) => {
         </h4>
         <p>{description}</p>
         <p>
-          {languages.length > 0 && (
+          {languagesKeys.length > 0 && (
             <span>
               <strong>Languages: </strong>
-              {languages.map((language, index) => (
+              {languagesKeys.map((language, index) => (
                 <span key={`${language}_${index}`}>
                   {language}
-                  {languages.length - 1 !== index && ", "}
+                  {languagesKeys.length - 1 !== index && ", "}
                 </span>
               ))}
             </span>
