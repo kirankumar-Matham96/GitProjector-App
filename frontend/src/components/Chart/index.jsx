@@ -74,7 +74,7 @@ const renderActiveShape = (props) => {
   );
 };
 
-export const Chart2 = ({ languages }) => {
+export const Chart = ({ languages }) => {
   const data = [];
 
   Object.entries(languages).map(([language, value]) => {

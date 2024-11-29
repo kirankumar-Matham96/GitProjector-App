@@ -6,7 +6,7 @@ import Readme from "../../components/Readme";
 import Tags from "../../components/Tags";
 import Tag from "../../components/Tag";
 import styles from "./index.module.scss";
-import { Chart2 } from "../../components/Chart2";
+import { Chart } from "../../components/Chart";
 
 const RepoDetails = () => {
   const [repo, setRepo] = useState(null);
@@ -58,7 +58,7 @@ const RepoDetails = () => {
           </div>
           <div className={styles.languagesUsedContainer}>
             <p>Languages Used (Chart)</p>
-            {repo?.languages && <Chart2 languages={repo?.languages}/>}
+            {repo?.languages && <Chart languages={repo?.languages} />}
             {/* <ul>
               {repo?.languages &&
                 Object.entries(repo?.languages).map(([language, value]) => (
