@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { githubSelector } from "../../redux/githubSlice";
 import { useState, useEffect } from "react";
+import { IoIosStar, IoMdEye, IoIosBug } from "react-icons/io";
+import { FaCodeFork } from "react-icons/fa6";
 import Readme from "../../components/Readme";
 import Tags from "../../components/Tags";
 import Tag from "../../components/Tag";
@@ -36,13 +38,34 @@ const RepoDetails = () => {
               </a>
               <p>{repo?.description}</p>
               <div className={styles.repoTags}>
-                {repo?.topics && <Tags tags={repo?.topics} />}
+                {repo?.topics && (
+                  <Tags className={styles.tags} tags={repo?.topics} />
+                )}
               </div>
               <div className={styles.repoStatisticsContainer}>
-                <Tag tag={`⭐ Starred ${repo?.stargazers_count}`} />|
-                <Tag tag={`🍴 Forked ${repo?.forks_count}`} />|
-                <Tag tag={`👁 Watching ${repo?.watchers_count}`} />|
-                <Tag tag={`🐛 Open Issues ${repo?.open_issues}`} />
+                <Tag>
+                  <IoIosStar className={styles.starIcon} />
+                  {/* ⭐ */}
+                  <p>Starred {repo?.stargazers_count}</p>
+                </Tag>
+                |
+                <Tag>
+                  <FaCodeFork className={styles.forkIcon} />
+                  {/* 🍴  */}
+                  <p>Forked {repo?.forks_count}</p>
+                </Tag>
+                |
+                <Tag>
+                  <IoMdEye className={styles.eyeIcon} />
+                  {/* 👁 */}
+                  <p>Watching {repo?.watchers_count}</p>
+                </Tag>
+                |
+                <Tag>
+                  <IoIosBug className={styles.bugIcon} />
+                  {/* 🐛 */}
+                  <p>Open Issues {repo?.open_issues}</p>
+                </Tag>
               </div>
             </div>
             <div className={styles.ownerDetails}>

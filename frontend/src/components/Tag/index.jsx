@@ -1,8 +1,10 @@
 import React from "react";
 import styles from "./index.module.scss";
 
-const Tag = ({ tag }) => {
-  return <div className={styles.tag}>{tag}</div>;
+const Tag = (props) => {
+  return (
+    <div className={styles.tag + " " + props.className}>{props.children}</div>
+  );
 };
 
 export default Tag;

@@ -61,6 +61,10 @@ form {
   margin-top: 5%;
 }
 
+div{
+  border-radius: 8px;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: $text-color-light;

@@ -33,6 +33,15 @@
   & .repoTags {
     margin: 0.5rem 0;
   }
+
+  & .repoTags .tags {
+    background-color: darkslateblue;
+    margin: 0 0.2rem;
+  }
+
+  & .bugIcon, .forkIcon, .starIcon, .eyeIcon{
+    font-size: 1.5rem;
+  }
 }
 
 .repoStatisticsContainer {
