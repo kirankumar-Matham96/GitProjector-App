@@ -2,7 +2,8 @@ import Tag from "../Tag";
 import styles from "./index.module.scss";
 
 const Tags = (props) => {
-  const { tags } = props;
+  const { tags, className } = props;
+  console.log("🚀 ~ Tags ~ className:", className)
   return (
     <ul className={styles.tagsContainer}>
       <strong>{tags.length > 0 && "Tags:"}</strong>
@@ -10,7 +11,7 @@ const Tags = (props) => {
         {tags.length > 0 &&
           tags.map((tag) => (
             <li key={tag}>
-              <Tag className={props.className}>{tag}</Tag>
+              <Tag className={className}>{tag}</Tag>
             </li>
           ))}
       </div>

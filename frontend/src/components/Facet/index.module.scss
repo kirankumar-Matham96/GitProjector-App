@@ -1,22 +1,32 @@
 @use "../../styles/colors" as *;
 
 .facetContainer {
-  // padding: 1rem;
   width: 100%;
   min-width: 16rem;
-  // border: 1px solid red;
   margin-bottom: 1rem;
 }
 .titelSection {
-  padding: 0 1rem;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: $light-gray;
 }
 .clearBtn {
-  all: unset;
-  padding: 0;
+  background-color: $light6;
+  padding: 0.3rem 0.5rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  align-self: center;
+  &:focus,
+  &:focus-visible {
+    border: none;
+    outline: none;
+  }
+  &:hover {
+    border: 1px solid $dark6;
+  }
 }
 .facetListContainer {
   padding: 1rem;

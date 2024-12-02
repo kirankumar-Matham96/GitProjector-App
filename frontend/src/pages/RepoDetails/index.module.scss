@@ -1,14 +1,11 @@
+@use "../../styles/colors" as *;
+
 .bgContainer {
-  // border: 1px solid purple;
-  margin: 5rem;
-  border-radius: 2rem;
-  box-shadow: 0 0 10px 10px red;
+  margin: 4rem 20rem;
 }
 
 .basicDetailsContainer {
-  // border: 1px solid purple;
   margin: 1rem;
-  box-shadow: 0 0 5px 2px purple;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
@@ -25,7 +22,6 @@
 
   & .ownerDetails {
     display: flex;
-    // justify-content: center;
     align-items: center;
     gap: 1rem;
   }
@@ -39,7 +35,10 @@
     margin: 0 0.2rem;
   }
 
-  & .bugIcon, .forkIcon, .starIcon, .eyeIcon{
+  & .bugIcon,
+  .forkIcon,
+  .starIcon,
+  .eyeIcon {
     font-size: 1.5rem;
   }
 }
@@ -50,67 +49,60 @@
   margin: 0.5rem 0;
 }
 
-.chartAndLinks{
+.chartAndLinks {
   display: flex;
   justify-content: space-evenly;
 }
 
 .languagesUsedContainer {
-  // border: 1px solid purple;
+  box-shadow: 0 0 1.5rem -5px $light6;
   margin: 1rem;
   width: 50%;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
+  padding: 1rem;
 }
 
-.languageChartAndListContainer{
+.languageChartAndListContainer {
   display: flex;
   justify-content: space-around;
-  // align-items: center;
-  border: 1px solid white;
   & ul {
     margin-top: 7rem;
   }
 }
 
-.chart{
-  border: 5px solid green;
+.chart {
 }
 
 .repoActivityContainer {
-  // border: 1px solid purple;
-  border: 1px solid red;
   margin: 1rem;
 }
 
 .repoLinksAndActionsContainer {
-  // border: 1px solid purple;
-  border: 1px solid red;
+  box-shadow: 0 0 1.5rem -5px $light6;
   margin: 1rem;
   width: 50%;
+  padding: 1rem;
 }
 
 .tabsSection {
-  border: 1px solid yellow;
+  box-shadow: 0 0 1.5rem -5px $light6;
+  margin: 2rem 1rem;
+  padding: 1rem;
 }
 
 .readmeContainer {
-  // border: 1px solid purple;
   margin: 1rem;
 }
 
 .codeInsightsContainer {
-  // border: 1px solid purple;
   margin: 1rem;
 }
 
 .issuesContainer {
-  // border: 1px solid purple;
   margin: 1rem;
 }
 
 .discussionsContainer {
-  // border: 1px solid purple;
   margin: 1rem;
 }

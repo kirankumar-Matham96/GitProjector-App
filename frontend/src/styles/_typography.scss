@@ -24,20 +24,16 @@ h2 {
 }
 h3 {
   font-size: $font-size-h3;
-  // margin-bottom: 2rem;
 }
 
 h4 {
   font-size: $font-size-h4;
-  // margin-bottom: 2rem;
 }
 h5 {
   font-size: $font-size-h5;
-  // margin-bottom: 2rem;
 }
 h6 {
   font-size: $font-size-h6;
-  // margin-bottom: 2rem;
 }
 
 // Links
@@ -56,6 +52,3 @@ a {
     }
   }
 }
-
-// Forward typography settings
-// @forward "./_typography";

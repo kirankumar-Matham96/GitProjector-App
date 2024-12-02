@@ -93,12 +93,12 @@ export const Chart = (props) => {
   );
 
   return (
-    <PieChart className={className} width={500} height={400}>
+    <PieChart className={className} width={550} height={400}>
       <Pie
         activeIndex={activeIndex}
         activeShape={renderActiveShape}
         data={data}
-        cx={250}
+        cx={270}
         cy={200}
         innerRadius={70}
         outerRadius={100}

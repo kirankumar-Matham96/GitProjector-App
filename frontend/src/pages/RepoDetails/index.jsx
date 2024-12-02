@@ -45,25 +45,21 @@ const RepoDetails = () => {
               <div className={styles.repoStatisticsContainer}>
                 <Tag>
                   <IoIosStar className={styles.starIcon} />
-                  {/* ⭐ */}
                   <p>Starred {repo?.stargazers_count}</p>
                 </Tag>
                 |
                 <Tag>
                   <FaCodeFork className={styles.forkIcon} />
-                  {/* 🍴  */}
                   <p>Forked {repo?.forks_count}</p>
                 </Tag>
                 |
                 <Tag>
                   <IoMdEye className={styles.eyeIcon} />
-                  {/* 👁 */}
                   <p>Watching {repo?.watchers_count}</p>
                 </Tag>
                 |
                 <Tag>
                   <IoIosBug className={styles.bugIcon} />
-                  {/* 🐛 */}
                   <p>Open Issues {repo?.open_issues}</p>
                 </Tag>
               </div>
@@ -96,7 +92,7 @@ const RepoDetails = () => {
             </div>
 
             <div className={styles.repoLinksAndActionsContainer}>
-              <h5>🌐 Links</h5>
+              <h4>Quick Links</h4>
               <p>
                 <a href={repo?.html_url} target="_blank">
                   View on GitHub

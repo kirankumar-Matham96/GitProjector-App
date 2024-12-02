@@ -1,12 +1,12 @@
 @use "../../styles/colors" as *;
 
 .bgContainer {
-  padding: 3rem;
+  padding: 3rem 0;
+  margin: 0 20rem;
 }
 
 .searchPageContainer {
   display: flex;
-  margin: 0 10rem;
 }
 
 .facetsContainer {
