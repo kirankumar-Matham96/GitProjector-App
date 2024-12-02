@@ -45,6 +45,7 @@ class GithubApis {
       const resp = await axios.get(`${this.URL}/repos/readme`, options);
       return resp.data;
     } catch (error) {
+      if (!error.response.data.success) return null;
       throw error;
     }
   };

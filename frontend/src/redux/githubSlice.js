@@ -33,7 +33,8 @@ export const getReadme = createAsyncThunk(
   async (repoName, thunkApi) => {
     try {
       const resp = await githubApis.getReadme(repoName);
-      return resp.readme;
+      if (resp?.readme) return resp.readme;
+      return null;
     } catch (error) {
       return thunkApi.rejectWithValue(error);
     }
@@ -161,10 +162,9 @@ const githubSlice = createSlice({
       state.perPage = perPage || state.perPage;
       applyAllFilters(state);
     },
-    setCurrentTab: (state,action) => {
-      console.log("🚀 ~ action.payload:", action.payload)
+    setCurrentTab: (state, action) => {
       state.currentTab = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -205,6 +205,7 @@ const githubSlice = createSlice({
       })
       .addCase(getReadme.rejected, (state, action) => {
         state.error = action.payload;
+        state.readmeContent = null;
         state.isError = true;
         state.isLoading = false;
       });
@@ -213,7 +214,12 @@ const githubSlice = createSlice({
 
 export default githubSlice.reducer;
 
-export const { sortByDate, searchFilter, facetFilter, paginationFilter, setCurrentTab } =
-  githubSlice.actions;
+export const {
+  sortByDate,
+  searchFilter,
+  facetFilter,
+  paginationFilter,
+  setCurrentTab,
+} = githubSlice.actions;
 
 export const githubSelector = (state) => state.github;
