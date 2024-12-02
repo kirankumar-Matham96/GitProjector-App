@@ -123,6 +123,7 @@ const INITIAL_STATE = {
     facets: [],
     sortBy: "",
   },
+  currentTab: "readme",
 };
 
 const githubSlice = createSlice({
@@ -160,6 +161,10 @@ const githubSlice = createSlice({
       state.perPage = perPage || state.perPage;
       applyAllFilters(state);
     },
+    setCurrentTab: (state,action) => {
+      console.log("🚀 ~ action.payload:", action.payload)
+      state.currentTab = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -208,7 +213,7 @@ const githubSlice = createSlice({
 
 export default githubSlice.reducer;
 
-export const { sortByDate, searchFilter, facetFilter, paginationFilter } =
+export const { sortByDate, searchFilter, facetFilter, paginationFilter, setCurrentTab } =
   githubSlice.actions;
 
 export const githubSelector = (state) => state.github;

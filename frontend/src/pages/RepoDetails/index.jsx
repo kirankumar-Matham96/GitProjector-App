@@ -7,17 +7,17 @@ import { FaCodeFork } from "react-icons/fa6";
 import Readme from "../../components/Readme";
 import Tags from "../../components/Tags";
 import Tag from "../../components/Tag";
-import styles from "./index.module.scss";
+import Tabs from "../../components/Tabs";
 import { Chart } from "../../components/Chart";
+import styles from "./index.module.scss";
 
 const RepoDetails = () => {
+  const tabsList = ["readme", "code", "commits", "issues", "discussions"];
   const [repo, setRepo] = useState(null);
   const { id } = useParams();
-  // const dispatch = useDispatch();
-  const { repos } = useSelector(githubSelector);
+  const { repos, currentTab } = useSelector(githubSelector);
 
   useEffect(() => {
-    // dispatch(getRepo(title));
     const repoFound = repos.find((repo) => repo.name === id);
     if (!repoFound) {
       setRepo(null);
@@ -106,29 +106,44 @@ const RepoDetails = () => {
           </section>
 
           <section className={styles.tabsSection}>
-            <div className={styles.readmeContainer}>
-              <h5>📂 README</h5>
-              {/* {repo?.name && <Readme name={repo?.name} />} */}
-            </div>
-            <div className={styles.codeInsightsContainer}>
-              <h5>Code</h5>
-              <p>Code snippet here with IDE like look</p>
-            </div>
-            <div className={styles.repoActivityContainer}>
-              <h5>📜 Recent Commits</h5>
-              <p>Commit 1: Message (Author) (Timestamp)</p>
-              <p>Commit 2: Message (Author) (Timestamp)</p>
-            </div>
-            <div className={styles.issuesContainer}>
-              <h5>Issues</h5>
-              <p>Issues:1</p>
-              <p>Issues:2</p>
-            </div>
-            <div className={styles.discussionsContainer}>
-              <h5>Discussions</h5>
-              <p>Discussion:1</p>
-              <p>Discussion:2</p>
-            </div>
+            <Tabs tabs={tabsList} />
+
+            {currentTab === "readme" && (
+              <div className={styles.readmeContainer}>
+                {repo?.name && <Readme name={repo?.name} />}
+              </div>
+            )}
+
+            {currentTab === "code" && (
+              <div className={styles.codeInsightsContainer}>
+                <h5>Code</h5>
+                <p>Code snippet here with IDE like look</p>
+              </div>
+            )}
+
+            {currentTab === "commits" && (
+              <div className={styles.repoActivityContainer}>
+                <h5>📜 Recent Commits</h5>
+                <p>Commit 1: Message (Author) (Timestamp)</p>
+                <p>Commit 2: Message (Author) (Timestamp)</p>
+              </div>
+            )}
+
+            {currentTab === "issues" && (
+              <div className={styles.issuesContainer}>
+                <h5>Issues</h5>
+                <p>Issues:1</p>
+                <p>Issues:2</p>
+              </div>
+            )}
+
+            {currentTab === "discussions" && (
+              <div className={styles.discussionsContainer}>
+                <h5>Discussions</h5>
+                <p>Discussion:1</p>
+                <p>Discussion:2</p>
+              </div>
+            )}
           </section>
         </div>
       )}

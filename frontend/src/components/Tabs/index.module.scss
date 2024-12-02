@@ -1,0 +1,25 @@
+@use "../../styles/colors" as *;
+
+.tabsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+}
+.tab {
+  // border: 1px solid $light6;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.active {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: $light5;
+  }
+}
