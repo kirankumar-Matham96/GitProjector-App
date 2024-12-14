@@ -1,5 +1,6 @@
 import { Octokit } from "octokit"; // Import Octokit for GitHub API integration
 import { createOrUpdateTextFile } from "@octokit/plugin-create-or-update-text-file"; // Import the plugin for creating or updating text files
+import { header } from "express-validator";
 // import { createOAuthDeviceAuth } from "@octokit/auth-oauth-device"; // Import OAuth device authentication strategy
 
 export class GithubRepository {
@@ -74,7 +75,7 @@ export class GithubRepository {
    * @param {string} repoName - The name of the repository
    * @returns {Promise<{ content: string, sha: string, name: string }>} The README file content and metadata
    */
-  getReadmeFielContentAndDecrypt = async (repoName) => {
+  getReadmeFileContentAndDecrypt = async (repoName) => {
     try {
       const { data: readme } = await this.octokit.request(
         "GET /repos/{owner}/{repo}/readme",
@@ -162,4 +163,27 @@ export class GithubRepository {
       throw error; // Pass the error to the next middleware
     }
   };
+
+  /* get the code */
+
+  // get the issues
+  getIssues = async (repoName) => {
+    try {
+      const issues = await this.octokit.request(
+        "GET /repos/{owner}/{repo}/issues",
+        {
+          owner: this.#getUserName(),
+          repo: repoName,
+          headers: {
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        }
+      );
+      return issues.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // get the discussions
 }

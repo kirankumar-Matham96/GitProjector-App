@@ -1,5 +1,6 @@
 import { Router } from "express"; // Import Router from express
 import githubController from "./controller.js"; // Import the GitHub controller
+import { get } from "mongoose";
 
 export const gitRouter = Router(); // Create a new router instance
 
@@ -51,6 +52,16 @@ gitRouter.get("/languages", githubController.getRepoLanguages); // Route to get 
  * @returns {Error}  400 - Bad request error
  */
 gitRouter.get("/readme", githubController.getReadme); // Route to get README content
+
+/**
+ * Route for getting all the issues of a specific repository
+ * @route GET /issues
+ * @group Repositories - Operations about repositories
+ * @param {string} repoName.body.required - The name of the repository
+ * @returns {object} 200 - Success message after getting the issues
+ * @returns {Error}  400 - Bad request error
+ */
+gitRouter.get("/issues", githubController.getAllIssues);
 
 /**
  * Route for updating the README file of a specific repository

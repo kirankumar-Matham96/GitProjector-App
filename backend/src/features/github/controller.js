@@ -55,7 +55,7 @@ class GithubController {
             homepage: repo.homepage,
             stargazers_count: repo.stargazers_count,
             watchers_count: repo.watchers_count,
-            dominentLanguage: repo.language,
+            dominantLanguage: repo.language,
             has_issues: repo.has_issues,
             has_projects: repo.has_projects,
             has_discussions: repo.has_discussions,
@@ -133,10 +133,27 @@ class GithubController {
     try {
       const { repoName } = req.query; // Extract the repository name from request query parameters
       const { content } =
-        await this.githubRepository.getReadmeFielContentAndDecrypt(repoName); // Get and decrypt README content
+        await this.githubRepository.getReadmeFileContentAndDecrypt(repoName); // Get and decrypt README content
       res.status(200).json({ success: true, readme: content }); // Send the README content
     } catch (error) {
       next(error); // Pass the error to the next middleware
+    }
+  };
+
+  // get issues
+  getAllIssues = async (req, res, next) => {
+    try {
+      const { repoName } = req.query;
+      const resp = await this.githubRepository.getIssues(repoName);
+
+      const issues = resp.map((issue) => {
+        const { id, title, body, html_url } = issue;
+        return { id, title, body, html_url };
+      });
+
+      res.status(200).json({ success: true, issues });
+    } catch (error) {
+      next(error);
     }
   };
 
