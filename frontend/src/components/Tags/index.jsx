@@ -3,7 +3,6 @@ import styles from "./index.module.scss";
 
 const Tags = (props) => {
   const { tags, className } = props;
-  console.log("🚀 ~ Tags ~ className:", className)
   return (
     <ul className={styles.tagsContainer}>
       <strong>{tags.length > 0 && "Tags:"}</strong>

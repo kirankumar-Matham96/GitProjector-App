@@ -4,5 +4,7 @@ export default function SplineRoboHead() {
   return (
     // black small robot following cursor movements
     <Spline scene="https://prod.spline.design/a7AUu1SP7yQvAFEk/scene.splinecode" />
+    // white small robot following cursor movements
+    // <Spline scene="https://prod.spline.design/FIqAYiR9miCUEvSn/scene.splinecode" />
   );
 }

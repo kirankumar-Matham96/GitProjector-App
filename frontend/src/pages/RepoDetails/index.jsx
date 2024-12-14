@@ -8,6 +8,7 @@ import Readme from "../../components/Readme";
 import Tags from "../../components/Tags";
 import Tag from "../../components/Tag";
 import Tabs from "../../components/Tabs";
+import { Issues } from "../../components/Issues";
 import { Chart } from "../../components/Chart";
 import styles from "./index.module.scss";
 
@@ -128,12 +129,9 @@ const RepoDetails = () => {
                 <p>Commit 2: Message (Author) (Timestamp)</p>
               </div>
             )}
-
             {currentTab === "issues" && (
               <div className={styles.issuesContainer}>
-                <h5>Issues</h5>
-                <p>Issues:1</p>
-                <p>Issues:2</p>
+                {repo?.name && <Issues name={repo?.name} />}
               </div>
             )}
 

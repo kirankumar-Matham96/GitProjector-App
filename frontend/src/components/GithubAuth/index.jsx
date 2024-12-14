@@ -9,7 +9,7 @@ import styles from "./index.module.scss";
 const GithubAuth = () => {
   const token = useRef();
   const { token: authToken } = useSelector(authSelector);
-  const git = useSelector(githubSelector);
+  // const git = useSelector(githubSelector);
   const dispatch = useDispatch();
 
   const handleOnClick = () => {

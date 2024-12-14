@@ -5,7 +5,7 @@ export const githubLogin = createAsyncThunk(
   "github/githubLogin",
   async ({ gitToken, authToken }, thunkApi) => {
     try {
-      const resp = await githubApis.getGithhubAccess({
+      const resp = await githubApis.getGithubAccess({
         githubToken: gitToken,
         authToken,
       });
@@ -35,6 +35,18 @@ export const getReadme = createAsyncThunk(
       const resp = await githubApis.getReadme(repoName);
       if (resp?.readme) return resp.readme;
       return null;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
+export const getIssues = createAsyncThunk(
+  "github/getIssues",
+  async (repoName, thunkApi) => {
+    try {
+      const resp = await githubApis.getIssues(repoName);
+      return resp.issues;
     } catch (error) {
       return thunkApi.rejectWithValue(error);
     }
@@ -114,6 +126,7 @@ const INITIAL_STATE = {
   readmeContent: "",
   filteredRepos: [],
   paginatedRepos: [],
+  issues: [],
   isLoading: false,
   isError: false,
   error: null,
@@ -207,6 +220,18 @@ const githubSlice = createSlice({
         state.error = action.payload;
         state.readmeContent = null;
         state.isError = true;
+        state.isLoading = false;
+      })
+      .addCase(getIssues.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getIssues.fulfilled, (state, action) => {
+        state.issues = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getIssues.rejected, (state, action) => {
+        state.isError = true;
+        state.error = action.payload;
         state.isLoading = false;
       });
   },

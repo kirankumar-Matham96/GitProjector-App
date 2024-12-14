@@ -10,7 +10,7 @@ class GithubApis {
   }
 
   //   authenticate user with github token
-  getGithhubAccess = async ({ githubToken, authToken }) => {
+  getGithubAccess = async ({ githubToken, authToken }) => {
     try {
       this.headers["Authorization"] = authToken;
       const options = {
@@ -46,6 +46,19 @@ class GithubApis {
       return resp.data;
     } catch (error) {
       if (!error.response.data.success) return null;
+      throw error;
+    }
+  };
+
+  getIssues = async (name) => {
+    try {
+      const options = {
+        headers: this.headers,
+        params: { repoName: name },
+      };
+      const resp = await axios.get(`${this.URL}/repos/issues`, options);
+      return resp.data;
+    } catch (error) {
       throw error;
     }
   };
