@@ -64,6 +64,16 @@ gitRouter.get("/readme", githubController.getReadme); // Route to get README con
 gitRouter.get("/issues", githubController.getAllIssues);
 
 /**
+ * Route for getting all the repo contents/files
+ * @route GET /contents
+ * @group Repositories - Operations about repositories
+ * @param {string} repoName.body.required - The name of the repository
+ * @returns {object} 200 - Success message after getting the issues
+ * @returns {Error}  400 - Bad request error
+ */
+gitRouter.get("/contents", githubController.getContents);
+
+/**
  * Route for updating the README file of a specific repository
  * @route PUT /readme
  * @group Repositories - Operations about repositories

@@ -164,7 +164,30 @@ export class GithubRepository {
     }
   };
 
-  /* get the code */
+  /* get the repo content */
+  getRepoContents = async (repoName, path = "") => {
+    try {
+      const contents = await this.octokit.request(
+        "GET /repos/{owner}/{repo}/contents/{path}",
+        {
+          owner: this.#getUserName(),
+          repo: repoName || "GitProjector-App",
+          path: path || "/backend",
+          headers: {
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        }
+      );
+      console.log(
+        "🚀 ~ GithubRepository ~ getRepoContents= ~ contents:",
+        contents.data
+      );
+
+      return contents.data;
+    } catch (error) {
+      throw error;
+    }
+  };
 
   // get the issues
   getIssues = async (repoName) => {
@@ -184,6 +207,4 @@ export class GithubRepository {
       throw error;
     }
   };
-
-  // get the discussions
 }
