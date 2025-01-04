@@ -56,10 +56,8 @@ export const getIssues = createAsyncThunk(
 export const getContents = createAsyncThunk(
   "github/getContents",
   async ({ repoName, path }, thunkApi) => {
-    console.log("🚀 ~ repoName, path:", repoName, path);
     try {
       const resp = await githubApis.getRepoContents(repoName, path);
-      console.log("🚀 ~ resp:", resp);
       return resp.contents;
     } catch (error) {
       return thunkApi.rejectWithValue(error);
