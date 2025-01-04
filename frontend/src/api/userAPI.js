@@ -6,7 +6,8 @@ class UserApis {
       "Content-Type": "application/json",
     };
 
-    this.URL = import.meta.env.VITE_URL;
+    this.URL = import.meta.env.VITE_DEV_URL;
+    // this.URL = import.meta.env.VITE_PRODUCTION_URL;
   }
 
   userSignup = async (userData) => {

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { IoIosStar, IoMdEye, IoIosBug } from "react-icons/io";
 import { FaCodeFork } from "react-icons/fa6";
 import Readme from "../../components/Readme";
+import Content from "../../components/Content";
 import Tags from "../../components/Tags";
 import Tag from "../../components/Tag";
 import Tabs from "../../components/Tabs";
@@ -117,8 +118,7 @@ const RepoDetails = () => {
 
             {currentTab === "code" && (
               <div className={styles.codeInsightsContainer}>
-                <h5>Code</h5>
-                <p>Code snippet here with IDE like look</p>
+                {repo?.name && <Content name={repo?.name} />}
               </div>
             )}
 

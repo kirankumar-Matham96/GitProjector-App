@@ -6,7 +6,8 @@ class GithubApis {
       "Content-Type": "application/json",
     };
 
-    this.URL = import.meta.env.VITE_URL;
+    this.URL = import.meta.env.VITE_DEV_URL;
+    // this.URL = import.meta.env.VITE_PRODUCTION_URL;
   }
 
   //   authenticate user with github token
@@ -18,6 +19,7 @@ class GithubApis {
         data: JSON.stringify(githubToken),
       };
       const resp = await axios.get(`${this.URL}/repos/login`, options);
+      console.log("🚀 ~ GithubApis ~ getGithubAccess= ~ resp.data:", resp.data);
       return resp.data;
     } catch (error) {
       throw error;
@@ -57,6 +59,21 @@ class GithubApis {
         params: { repoName: name },
       };
       const resp = await axios.get(`${this.URL}/repos/issues`, options);
+      return resp.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  getRepoContents = async (name, path = "") => {
+    try {
+      const options = {
+        headers: this.headers,
+        params: { repoName: name, path },
+      };
+
+      const resp = await axios.get(`${this.URL}/repos/contents`, options);
+      console.log("🚀 ~ GithubApis ~ getRepoContents= ~ resp:", resp.data);
       return resp.data;
     } catch (error) {
       throw error;

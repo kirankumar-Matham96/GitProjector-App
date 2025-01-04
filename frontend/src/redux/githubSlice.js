@@ -53,6 +53,20 @@ export const getIssues = createAsyncThunk(
   }
 );
 
+export const getContents = createAsyncThunk(
+  "github/getContents",
+  async ({ repoName, path }, thunkApi) => {
+    console.log("🚀 ~ repoName, path:", repoName, path);
+    try {
+      const resp = await githubApis.getRepoContents(repoName, path);
+      console.log("🚀 ~ resp:", resp);
+      return resp.contents;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
 const applyAllFilters = (state) => {
   let results = [...state.repos];
 
@@ -127,6 +141,7 @@ const INITIAL_STATE = {
   filteredRepos: [],
   paginatedRepos: [],
   issues: [],
+  repoContents: [],
   isLoading: false,
   isError: false,
   error: null,
@@ -177,6 +192,9 @@ const githubSlice = createSlice({
     },
     setCurrentTab: (state, action) => {
       state.currentTab = action.payload;
+    },
+    clearContents: (state) => {
+      state.repoContents = [];
     },
   },
   extraReducers: (builder) => {
@@ -233,6 +251,18 @@ const githubSlice = createSlice({
         state.isError = true;
         state.error = action.payload;
         state.isLoading = false;
+      })
+      .addCase(getContents.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getContents.fulfilled, (state, action) => {
+        state.repoContents = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getContents.rejected, (state, action) => {
+        state.isError = true;
+        state.error = action.payload;
+        state.isLoading = false;
       });
   },
 });
@@ -245,6 +275,7 @@ export const {
   facetFilter,
   paginationFilter,
   setCurrentTab,
+  clearContents,
 } = githubSlice.actions;
 
 export const githubSelector = (state) => state.github;
