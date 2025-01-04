@@ -3,7 +3,7 @@ import { CustomError } from "../utils/customError.js";
 
 /**
  * Middleware to authenticate users using JWT tokens.
- * 
+ *
  * This function checks for a valid JWT in the authorization header and extracts
  * the user ID if the token is valid. If the token is missing or invalid, it
  * throws a CustomError.
@@ -17,13 +17,9 @@ export const auth = (req, res, next) => {
   try {
     // Retrieve the authorization header from the request
     const authorization = req.headers["authorization"];
-    
-    // Extract the token from the authorization header
-    const token =
-      authorization?.split(" ").length === 2
-        ? authorization?.split(" ")[1] // Get the token if the header is in 'Bearer token' format
-        : authorization; // Otherwise, treat the entire header as the token
 
+    // Extract the token from the authorization header
+    const token = authorization?.split(" ")[1];
     // Check if the token is provided
     if (!token) {
       throw new CustomError("Token required"); // Throw error if no token is found

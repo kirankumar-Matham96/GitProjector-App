@@ -160,7 +160,10 @@ class GithubController {
   getContents = async (req, res, next) => {
     try {
       const { repoName, path } = req.query;
-      const contents = await this.githubRepository.getRepoContents(repoName, path);
+      const contents = await this.githubRepository.getRepoContents(
+        repoName,
+        path
+      );
       return res.status(200).json({ success: true, contents });
     } catch (error) {
       next(error);

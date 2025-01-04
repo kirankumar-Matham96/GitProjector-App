@@ -1,6 +1,7 @@
 import { Octokit } from "octokit"; // Import Octokit for GitHub API integration
 import { createOrUpdateTextFile } from "@octokit/plugin-create-or-update-text-file"; // Import the plugin for creating or updating text files
 import { header } from "express-validator";
+import { CustomError } from "../../utils/customError.js";
 // import { createOAuthDeviceAuth } from "@octokit/auth-oauth-device"; // Import OAuth device authentication strategy
 
 export class GithubRepository {
@@ -68,6 +69,10 @@ export class GithubRepository {
     return this.#userName; // Return the stored username
   };
 
+  #decryptFileContent = (encryptedContent) => {
+    return Buffer.from(encryptedContent, "base64").toString();
+  };
+
   /**
    * Retrieves and decrypts the content of the README file for a given repository
    * @async
@@ -88,7 +93,7 @@ export class GithubRepository {
         }
       );
 
-      const content = Buffer.from(readme.content, "base64").toString(); // Decrypt the README content
+      const content = this.#decryptFileContent(readme.content); // Decrypt the README content
       return { content, sha: readme.sha, name: readme.name }; // Return the content and metadata
     } catch (error) {
       throw error;
@@ -171,17 +176,17 @@ export class GithubRepository {
         "GET /repos/{owner}/{repo}/contents/{path}",
         {
           owner: this.#getUserName(),
-          repo: repoName || "GitProjector-App",
-          path: path || "/backend",
+          repo: repoName,
+          path,
           headers: {
             "X-GitHub-Api-Version": "2022-11-28",
           },
         }
       );
-      console.log(
-        "🚀 ~ GithubRepository ~ getRepoContents= ~ contents:",
-        contents.data
-      );
+
+      if (contents.data.type === "file") {
+        contents.data.content = this.#decryptFileContent(contents.data.content);
+      }
 
       return contents.data;
     } catch (error) {
