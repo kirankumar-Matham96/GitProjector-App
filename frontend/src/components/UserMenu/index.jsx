@@ -34,17 +34,17 @@ const UserMenu = () => {
       </div>
       <ul className={`${showMenu ? "show" : ""}`}>
         {/* show username */}
-        <h6>{userName || "Anonymouse"}</h6>
-        <li>
+        <h6>{userName || "Anonymous"}</h6>
+        <li onClick={toggleMenu}>
           <Link to="/signup">Sign Up</Link>
         </li>
-        <li>
+        <li onClick={toggleMenu}>
           <Link to="/signin">Sign In</Link>
         </li>
-        <li>
+        <li onClick={toggleMenu}>
           <Link to="/profile">Profile</Link>
         </li>
-        <li>
+        <li onClick={toggleMenu}>
           <Link to="/signout">Sign Out</Link>
         </li>
       </ul>
