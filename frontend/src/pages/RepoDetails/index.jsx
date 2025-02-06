@@ -14,7 +14,7 @@ import { Chart } from "../../components/Chart";
 import styles from "./index.module.scss";
 
 const RepoDetails = () => {
-  const tabsList = ["readme", "code", "commits", "issues", "discussions"];
+  const tabsList = ["readme", "code", "commits", "issues"];
   const [repo, setRepo] = useState(null);
   const { id } = useParams();
   const { repos, currentTab } = useSelector(githubSelector);
@@ -93,17 +93,12 @@ const RepoDetails = () => {
               )}
             </div>
 
-            <div className={styles.repoLinksAndActionsContainer}>
-              <h4>Quick Links</h4>
-              <p>
-                <a href={repo?.html_url} target="_blank">
-                  View on GitHub
-                </a>
-              </p>
-              <p>
-                <a href={repo?.clone_url}>Clone URL</a>
-              </p>
-              <p>Download Zip</p>
+            <div className={styles.repoJourneyContainer}>
+              <h4>Repo Journey</h4>
+              <img
+                src="https://next.ossinsight.io/widgets/official/compose-activity-trends/thumbnail.png?repo_id=881876746&image_size=auto"
+                alt="repo journey graph"
+              />
             </div>
           </section>
 
@@ -132,14 +127,6 @@ const RepoDetails = () => {
             {currentTab === "issues" && (
               <div className={styles.issuesContainer}>
                 {repo?.name && <Issues name={repo?.name} />}
-              </div>
-            )}
-
-            {currentTab === "discussions" && (
-              <div className={styles.discussionsContainer}>
-                <h5>Discussions</h5>
-                <p>Discussion:1</p>
-                <p>Discussion:2</p>
               </div>
             )}
           </section>

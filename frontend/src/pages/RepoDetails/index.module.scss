@@ -78,12 +78,17 @@
   margin: 1rem;
 }
 
-.repoLinksAndActionsContainer {
+.repoJourneyContainer {
   box-shadow: 0 0 1.5rem -5px $light6;
   margin: 1rem;
   width: 50%;
   padding: 1rem;
+  & img {
+    margin-top: 1.5rem;
+    width: 100%;
+  }
 }
+
 
 .tabsSection {
   box-shadow: 0 0 1.5rem -5px $light6;

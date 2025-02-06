@@ -72,6 +72,7 @@ class GithubApis {
       };
 
       const resp = await axios.get(`${this.URL}/repos/contents`, options);
+      console.log("🚀 ~ GithubApis ~ getRepoContents= ~ resp.data:", resp.data);
       return resp.data;
     } catch (error) {
       throw error;

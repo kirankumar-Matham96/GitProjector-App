@@ -1,0 +1,33 @@
+@use "../../styles/colors" as *;
+
+.contentName {
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 0.3rem;
+}
+.backBtn {
+  padding: 0.3rem 0.5rem;
+  width: 4rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.filePath {
+  font-style: italic;
+  font-weight: 500;
+  margin: 0.3rem 0 1rem 0;
+  &:hover {
+    font-weight: 900;
+  }
+}
+
+.fileAndFolderIcons {
+  color: "#d1d1d1";
+}
+
+@media (prefers-color-scheme: light) {
+  .fileAndFolderIcons {
+    color: $text-color-light;
+  }
+}

@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "github-markdown-css";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { FaRegFileLines, FaFolder } from "react-icons/fa6";
 import {
   githubSelector,
   getContents,
@@ -10,6 +12,7 @@ import {
 import { useState } from "react";
 import Button from "../Button";
 import { CodeBlock, dracula } from "react-code-blocks";
+import styles from "./index.module.scss";
 
 const Content = ({ name }) => {
   const [fileLanguage, setFileLanguage] = useState("javascript");
@@ -17,176 +20,6 @@ const Content = ({ name }) => {
   const [path, setPath] = useState([]);
   const { repoContents } = useSelector(githubSelector);
   const dispatch = useDispatch();
-
-  const markdownExtensions = [
-    // Text and Markdown
-    ".txt",
-    ".md",
-    ".markdown",
-    ".rst",
-    ".adoc",
-
-    // Documents
-    ".pdf",
-    ".doc",
-    ".docx",
-    ".xls",
-    ".xlsx",
-    ".ppt",
-    ".pptx",
-    ".odt",
-    ".ods",
-    ".odp",
-
-    // Media Files
-    ".png",
-    ".jpg",
-    ".jpeg",
-    ".gif",
-    ".svg",
-    ".bmp",
-    ".ico",
-    ".webp",
-    ".tiff",
-    ".mp3",
-    ".wav",
-    ".mp4",
-    ".avi",
-    ".mov",
-
-    // Compressed Files
-    ".zip",
-    ".tar",
-    ".gz",
-    ".rar",
-    ".7z",
-    ".bz2",
-    ".xz",
-
-    // Binary Files
-    ".bin",
-    ".exe",
-    ".dll",
-    ".so",
-    ".dylib",
-    ".jar",
-    ".class",
-
-    // Fonts
-    ".ttf",
-    ".woff",
-    ".woff2",
-    ".otf",
-
-    // Logs
-    ".log",
-    ".out",
-    ".err",
-
-    // Miscellaneous
-    ".csv",
-    ".tsv",
-    ".ics",
-    ".dat",
-    ".bak",
-    ".tmp",
-    ".lock",
-  ];
-  const codeExtensions = [
-    // Programming Languages
-    ".js",
-    ".jsx",
-    ".ts",
-    ".tsx",
-    ".html",
-    ".css",
-    ".scss",
-    ".sass",
-    ".json",
-    ".xml",
-    ".yaml",
-    ".yml",
-    ".java",
-    ".py",
-    ".rb",
-    ".php",
-    ".cs",
-    ".cpp",
-    ".c",
-    ".h",
-    ".hpp",
-    ".go",
-    ".swift",
-    ".kt",
-    ".rs",
-    ".pl",
-    ".sh",
-    ".bash",
-    ".bat",
-    ".ps1",
-    ".lua",
-    ".perl",
-    ".r",
-    ".m",
-    ".dart",
-    ".scala",
-    ".groovy",
-    ".asm",
-    ".vhdl",
-
-    // Configuration Files
-    ".env",
-    ".ini",
-    ".cfg",
-    ".conf",
-    ".toml",
-
-    // Scripts
-    ".sql",
-    ".sqlite",
-    ".db",
-    ".ksh",
-    ".awk",
-    ".cmd",
-
-    // Data Formats
-    ".csv",
-    ".tsv",
-    ".parquet",
-    ".avro",
-    ".orc",
-
-    // Template Files
-    ".ejs",
-    ".pug",
-    ".hbs",
-    ".njk",
-    ".jinja",
-    ".liquid",
-
-    // Markup Languages
-    ".xml",
-    ".xhtml",
-    ".svg",
-    ".rss",
-
-    // Machine Learning and AI
-    ".ipynb",
-    ".pkl",
-    ".h5",
-    ".onnx",
-    ".pb",
-    ".tflite",
-
-    // DevOps and Infrastructure
-    ".dockerfile",
-    ".yml",
-    ".yaml",
-    ".tf",
-    ".tfvars",
-    ".k8s",
-    ".helm",
-  ];
 
   const getLanguageByExtension = (extension) => {
     switch (extension) {
@@ -264,7 +97,7 @@ const Content = ({ name }) => {
       setExtension("." + repoContents.name.split(".").pop());
     }
   }, [repoContents]);
-  
+
   useEffect(() => {
     setFileLanguage(getLanguageByExtension(extension));
   }, [extension]);
@@ -283,24 +116,39 @@ const Content = ({ name }) => {
 
   return (
     <div>
-      {path.length > 0 && <Button onClick={handleBack}>Back {"<=="}</Button>}
+      {path.length > 0 && (
+        <Button className={styles.backBtn} onClick={handleBack}>
+          <IoMdArrowRoundBack />
+        </Button>
+      )}
       {Array.isArray(repoContents) && (
         <ul>
-          <p>{path || "/"}</p>
+          {console.log("🚀 ~ Content ~ path:", path)}
+          <p className={styles.filePath}>
+            {path.length > 0 ? `/${path}` : "/"}
+          </p>
           {repoContents?.map((content) => (
             <li
               key={content.sha}
+              className={styles.contentName}
               onClick={() => handleContentSelect(content.name)}
             >
-              {content.name}
+              {content.type === "file" ? (
+                <FaRegFileLines className={styles.fileAndFolderIcons} />
+              ) : (
+                <FaFolder className={styles.fileAndFolderIcons} />
+              )}
+              &nbsp;{content.name}
             </li>
           ))}
         </ul>
       )}
       {!Array.isArray(repoContents) && (
         <div>
+          <p className={styles.filePath}>
+            {path.length > 0 ? `/${path}` : "/"}
+          </p>
           <h3>{name}</h3>
-          <p>{path || "/"}</p>
           <CodeBlock
             text={repoContents.content}
             language={fileLanguage}
