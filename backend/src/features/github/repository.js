@@ -194,6 +194,24 @@ export class GithubRepository {
     }
   };
 
+  getRepoCommits = async (repoName) => {
+    try {
+      const commits = await this.octokit.request(
+        "GET /repos/{owner}/{repo}/commits",
+        {
+          owner: this.#getUserName(),
+          repo: repoName,
+          headers: {
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        }
+      );
+      return commits.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // get the issues
   getIssues = async (repoName) => {
     try {

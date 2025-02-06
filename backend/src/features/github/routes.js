@@ -85,6 +85,8 @@ gitRouter.get("/contents", githubController.getContents);
  */
 // gitRouter.put("/readme", githubController.updateReadme); // Route to update README content
 
+gitRouter.get("/commits", githubController.getCommits);
+
 /**
  * Route for updating the README file with a plugin (currently commented out)
  * @route PUT /readmeWithPlugin

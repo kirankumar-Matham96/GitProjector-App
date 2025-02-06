@@ -170,6 +170,16 @@ class GithubController {
     }
   };
 
+  getCommits = async (req, res, next) => {
+    try {
+      const { repoName} = req.query;
+      const commits = await this.githubRepository.getRepoCommits(repoName);
+      return res.status(200).json({ success: true, commits });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // For later reference
 
   //   /* Custom made code used later when needed */
