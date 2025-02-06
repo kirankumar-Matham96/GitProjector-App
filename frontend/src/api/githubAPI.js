@@ -72,7 +72,21 @@ class GithubApis {
       };
 
       const resp = await axios.get(`${this.URL}/repos/contents`, options);
-      console.log("🚀 ~ GithubApis ~ getRepoContents= ~ resp.data:", resp.data);
+      return resp.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  getRepoCommits = async (name) => {
+    console.log("🚀 ~ GithubApis ~ getRepoCommits= ~ name:", name)
+    try {
+      const options = {
+        headers: this.headers,
+        params: { repoName: name },
+      };
+
+      const resp = await axios.get(`${this.URL}/repos/commits`, options);
       return resp.data;
     } catch (error) {
       throw error;

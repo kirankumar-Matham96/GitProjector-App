@@ -65,6 +65,20 @@ export const getContents = createAsyncThunk(
   }
 );
 
+export const getCommits = createAsyncThunk(
+  "github/getCommits",
+  async (repoName , thunkApi) => {
+    console.log("🚀 ~ gitHubSlice ~ repoName:", repoName);
+    try {
+      const resp = await githubApis.getRepoCommits(repoName);
+      console.log("🚀 ~ resp:", resp);
+      return resp.commits;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
 const applyAllFilters = (state) => {
   let results = [...state.repos];
 
@@ -139,6 +153,7 @@ const INITIAL_STATE = {
   filteredRepos: [],
   paginatedRepos: [],
   issues: [],
+  commits: [],
   repoContents: [],
   isLoading: false,
   isError: false,
@@ -258,6 +273,18 @@ const githubSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getContents.rejected, (state, action) => {
+        state.isError = true;
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getCommits.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCommits.fulfilled, (state, action) => {
+        state.commits = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getCommits.rejected, (state, action) => {
         state.isError = true;
         state.error = action.payload;
         state.isLoading = false;

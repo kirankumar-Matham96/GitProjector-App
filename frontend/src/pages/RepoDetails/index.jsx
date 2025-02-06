@@ -10,6 +10,7 @@ import Tags from "../../components/Tags";
 import Tag from "../../components/Tag";
 import Tabs from "../../components/Tabs";
 import { Issues } from "../../components/Issues";
+import { Commits } from "../../components/Commits";
 import { Chart } from "../../components/Chart";
 import styles from "./index.module.scss";
 
@@ -119,9 +120,10 @@ const RepoDetails = () => {
 
             {currentTab === "commits" && (
               <div className={styles.repoActivityContainer}>
-                <h5>📜 Recent Commits</h5>
-                <p>Commit 1: Message (Author) (Timestamp)</p>
-                <p>Commit 2: Message (Author) (Timestamp)</p>
+                <h5>📜 Commits</h5>
+                {repo?.name && <Commits name={repo?.name} />}
+                {/* <p>Commit 1: Message (Author) (Timestamp)</p>
+                <p>Commit 2: Message (Author) (Timestamp)</p> */}
               </div>
             )}
             {currentTab === "issues" && (
