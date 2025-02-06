@@ -1,0 +1,8 @@
+{
+  "name": "Git Projector",
+  "short_name": "Git Projector",
+  "description": "Git Projector is a git hub client app that has some of the features of the github website. It also has it's own features that GitHub did not provide. User can register and log in to the app. In the search page, repositories will be searched and filtered. User can check any repository basic details. Can also download the details of any repo in PDF format.",
+  "start_url": "/",
+  "display": "standalone",
+  "is_mobile": "false"
+}

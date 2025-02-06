@@ -18,8 +18,6 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/search" element={<Search />} />
           <Route path="/repo_details/:id" element={<RepoDetails />} />
-          {/* 
-          <Route path="/signup" element={<Signup />} /> */}
         </Routes>
         <Footer />
       </div>
