@@ -18,7 +18,8 @@ export const signin = createAsyncThunk(
   "auth/signin",
   async (userData, thunkApi) => {
     try {
-      return await userAPI.userSignin(userData);
+      const resp = await userAPI.userSignin(userData);
+      return resp.token;
     } catch (error) {
       thunkApi.rejectWithValue(error.message);
     }
@@ -70,8 +71,8 @@ const authSlice = createSlice({
       })
       .addCase(signin.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.token = action.payload.token;
-        const { name, email } = decodeJWT(action.payload.token);
+        state.token = action.payload;
+        const { name, email } = decodeJWT(action.payload);
         state.email = email;
         state.userName = name;
         alert("User logged in successfully!");

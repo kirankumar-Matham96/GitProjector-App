@@ -1,6 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import githubApis from "../api/githubAPI";
 
+const saveStateToLocalStorage = (state) => {
+  try {
+    localStorage.setItem("globalState", JSON.stringify(state));
+  } catch (error) {
+    console.log(`Error saving the data to local storage: ${error}`);
+  }
+};
+
+const loadStateFromLocalStorage = () => {
+  try {
+    const data = localStorage.getItem("globalState");
+    return data ? JSON.parse(data) : undefined;
+  } catch (error) {
+    console.log(`Failed to load the data from local storage: ${error}`);
+  }
+};
+
 export const githubLogin = createAsyncThunk(
   "github/githubLogin",
   async ({ gitToken, authToken }, thunkApi) => {
@@ -20,7 +37,11 @@ export const getAllRepos = createAsyncThunk(
   "github/getAllRepos",
   async (args, thunkApi) => {
     try {
+      const repos = JSON.parse(localStorage.getItem("repos"));
+      if (repos && repos.length > 0) return repos;
       const resp = await githubApis.getAllRepos();
+
+      localStorage.setItem("repos", JSON.stringify(resp.repos));
       return resp;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -33,7 +54,9 @@ export const getReadme = createAsyncThunk(
   async (repoName, thunkApi) => {
     try {
       const resp = await githubApis.getReadme(repoName);
-      if (resp?.readme) return resp.readme;
+      if (resp?.readme) {
+        return resp.readme;
+      }
       return null;
     } catch (error) {
       return thunkApi.rejectWithValue(error);
@@ -143,7 +166,7 @@ const applyAllFilters = (state) => {
   state.paginatedRepos = results.slice(startIndex, endIndex);
 };
 
-const INITIAL_STATE = {
+const INITIAL_STATE = loadStateFromLocalStorage() || {
   accessToken: "",
   userId: "",
   repos: [],
@@ -174,11 +197,13 @@ const githubSlice = createSlice({
       state.activeFilters.searchTerm = action.payload?.toLowerCase().trim();
 
       applyAllFilters(state);
+      saveStateToLocalStorage(state);
     },
     sortByDate: (state, action) => {
       state.activeFilters.sortBy = action.payload;
 
       applyAllFilters(state);
+      saveStateToLocalStorage(state);
     },
     facetFilter: (state, action) => {
       const foundFacetIndex = state.activeFilters.facets.findIndex(
@@ -194,18 +219,24 @@ const githubSlice = createSlice({
       }
 
       applyAllFilters(state);
+      saveStateToLocalStorage(state);
     },
     paginationFilter: (state, action) => {
       const { page, perPage } = action.payload;
       state.currentPage = page || state.currentPage;
       state.perPage = perPage || state.perPage;
       applyAllFilters(state);
+      saveStateToLocalStorage(state);
     },
     setCurrentTab: (state, action) => {
       state.currentTab = action.payload;
+      saveStateToLocalStorage(state);
     },
     clearContents: (state) => {
+      console.log("🚀 ~ state: clearContent is called");
       state.repoContents = [];
+      localStorage.removeItem("readmeContent");
+      saveStateToLocalStorage(state);
     },
   },
   extraReducers: (builder) => {
@@ -229,7 +260,7 @@ const githubSlice = createSlice({
         state.repos = action.payload.repos;
         state.filteredRepos = action.payload.repos;
 
-        state.currentPage = 1; // Reset to page 1
+        state.currentPage = 1;
         applyAllFilters(state); // Apply all filters including pagination
         state.isLoading = false;
       })
@@ -243,6 +274,7 @@ const githubSlice = createSlice({
       })
       .addCase(getReadme.fulfilled, (state, action) => {
         state.readmeContent = action.payload;
+
         state.isLoading = false;
       })
       .addCase(getReadme.rejected, (state, action) => {
