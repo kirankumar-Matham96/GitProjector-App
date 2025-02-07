@@ -79,7 +79,6 @@ class GithubApis {
   };
 
   getRepoCommits = async (name) => {
-    console.log("🚀 ~ GithubApis ~ getRepoCommits= ~ name:", name)
     try {
       const options = {
         headers: this.headers,

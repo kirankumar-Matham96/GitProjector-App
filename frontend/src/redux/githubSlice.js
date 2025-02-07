@@ -67,11 +67,9 @@ export const getContents = createAsyncThunk(
 
 export const getCommits = createAsyncThunk(
   "github/getCommits",
-  async (repoName , thunkApi) => {
-    console.log("🚀 ~ gitHubSlice ~ repoName:", repoName);
+  async (repoName, thunkApi) => {
     try {
       const resp = await githubApis.getRepoCommits(repoName);
-      console.log("🚀 ~ resp:", resp);
       return resp.commits;
     } catch (error) {
       return thunkApi.rejectWithValue(error);
@@ -281,7 +279,13 @@ const githubSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getCommits.fulfilled, (state, action) => {
-        state.commits = action.payload;
+        const sortedCommits = action.payload.sort((cmt1, cmt2) => {
+          return (
+            new Date(cmt2.commit.committer.date) -
+            new Date(cmt1.commit.committer.date)
+          );
+        });
+        state.commits = sortedCommits;
         state.isLoading = false;
       })
       .addCase(getCommits.rejected, (state, action) => {

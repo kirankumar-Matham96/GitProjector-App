@@ -120,10 +120,7 @@ const RepoDetails = () => {
 
             {currentTab === "commits" && (
               <div className={styles.repoActivityContainer}>
-                <h5>📜 Commits</h5>
                 {repo?.name && <Commits name={repo?.name} />}
-                {/* <p>Commit 1: Message (Author) (Timestamp)</p>
-                <p>Commit 2: Message (Author) (Timestamp)</p> */}
               </div>
             )}
             {currentTab === "issues" && (

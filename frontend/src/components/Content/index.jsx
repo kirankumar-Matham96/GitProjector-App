@@ -123,7 +123,6 @@ const Content = ({ name }) => {
       )}
       {Array.isArray(repoContents) && (
         <ul>
-          {console.log("🚀 ~ Content ~ path:", path)}
           <p className={styles.filePath}>
             {path.length > 0 ? `/${path}` : "/"}
           </p>
