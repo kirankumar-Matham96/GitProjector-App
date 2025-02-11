@@ -1,6 +1,6 @@
 # Git Projector
 
-An app that represents git hub and has some of the features that github provides, along with some new features.
+A MERN-stack app that represents git hub and has some of the features that github provides, along with some new features.
 
 ## Main Features
   - User can search for their repositories and filter the results.
